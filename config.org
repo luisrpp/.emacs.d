@@ -1,0 +1,148 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Luis Roberto Pereira de Paula
+
+* Personal Information
+
+#+begin_src emacs-lisp
+(setq user-full-name "Luis Roberto Pereira de Paula"
+    user-mail-address "luisrpp@gmail.com")
+#+end_src
+
+* Customize settings
+
+Set up the customize file to its own separate file, instead of saving
+customize settings in [[file:init.el][init.el]].
+
+#+begin_src emacs-lisp
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+#+end_src
+
+* Themes
+
+** Solarized theme
+
+Here's some configuration for [[https://github.com/bbatsov/solarized-emacs/][bbatsov's solarized themes]].
+
+#+begin_src emacs-lisp
+(use-package solarized-theme
+  :defer 10
+  :init
+  (setq solarized-use-variable-pitch nil)
+  :ensure t)
+#+end_src
+
+** Monokai theme
+
+#+begin_src emacs-lisp :tangle no
+(use-package monokai-theme
+  :if (window-system)
+  :ensure t
+  :init
+  (setq monokai-use-variable-pitch nil))
+#+end_src
+
+* Font
+
+[[http://adobe-fonts.github.io/source-code-pro/][Source Code Pro]] is a nice monospaced font.
+
+To install it on Arch Linux:
+
+#+begin_src sh :tangle no
+sudo pacman -S adobe-source-code-pro-fonts
+#+end_src
+
+And here's how we tell Emacs to use the font we want to use.
+
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+#+end_src
+
+* Sane defaults
+
+#+begin_src emacs-lisp
+;; UTF-8 please
+(setq locale-coding-system 'utf-8) ; pretty
+(set-terminal-coding-system 'utf-8) ; pretty
+(set-keyboard-coding-system 'utf-8) ; pretty
+(set-selection-coding-system 'utf-8) ; please
+(prefer-coding-system 'utf-8) ; with sugar on top
+(setq-default indent-tabs-mode nil)
+
+;; Don't beep at me
+(setq visible-bell t)
+#+end_src
+
+* Packages
+
+** Clojure
+
+#+begin_src emacs-lisp
+(use-package clojure-mode
+  :defer t
+  :ensure t)
+#+end_src
+
+** Emmet
+
+According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
+
+#+begin_src emacs-lisp
+(use-package emmet-mode
+  :ensure t
+  :commands emmet-mode
+  :config
+  (add-hook 'html-mode-hook 'emmet-mode)
+  (add-hook 'css-mode-hook 'emmet-mode))
+#+end_src
+
+** Evil
+
+#+begin_src emacs-lisp
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+#+end_src
+
+** Magit
+
+A great interface for git projects. It's much more pleasant to use
+than the git interface on the command line. Use an easy keybinding to
+access magit.
+
+#+begin_src emacs-lisp
+(use-package magit
+  :ensure t
+  :defer t
+  :bind ("C-c g" . magit-status)
+  :config
+  (define-key magit-status-mode-map (kbd "q") 'magit-quit-session))
+#+end_src
+
+** Markdown mode
+
+#+begin_src emacs-lisp
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.markdown\\'" . markdown-mode)
+               ("\\.md\\'"       . markdown-mode)))
+#+end_src
+
+** Python
+
+Integrates with IPython.
+
+#+begin_src emacs-lisp
+(use-package python-mode
+  :defer t
+  :ensure t)
+#+end_src
+
+** Rust
+
+#+BEGIN_SRC emacs-lisp
+(use-package rust-mode
+  :ensure t
+  :defer t)
+#+END_SRC
