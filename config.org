@@ -72,6 +72,10 @@ And here's how we tell Emacs to use the font we want to use.
 
 ;; Don't beep at me
 (setq visible-bell t)
+
+;; Stop creating “backup~” files and “#autosave#” files
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 #+end_src
 
 * Packages
