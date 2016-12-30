@@ -5,7 +5,7 @@
 
 #+begin_src emacs-lisp
 (setq user-full-name "Luis Roberto Pereira de Paula"
-    user-mail-address "luisrpp@gmail.com")
+      user-mail-address "luisrpp@gmail.com")
 #+end_src
 
 * Customize settings
@@ -27,9 +27,10 @@ Here's some configuration for [[https://github.com/bbatsov/solarized-emacs/][bba
 #+begin_src emacs-lisp
 (use-package solarized-theme
   :defer 10
+  :ensure t
   :init
   (setq solarized-use-variable-pitch nil)
-  :ensure t)
+  (load-theme 'solarized-dark))
 #+end_src
 
 ** Monokai theme
@@ -55,7 +56,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-14"))
 #+end_src
 
 * Sane defaults
@@ -126,7 +127,7 @@ access magit.
 (use-package markdown-mode
   :ensure t
   :mode (("\\.markdown\\'" . markdown-mode)
-               ("\\.md\\'"       . markdown-mode)))
+         ("\\.md\\'"       . markdown-mode)))
 #+end_src
 
 ** Python
@@ -137,6 +138,14 @@ Integrates with IPython.
 (use-package python-mode
   :defer t
   :ensure t)
+#+end_src
+
+** Ruby
+
+#+begin_src emacs-lisp
+(use-package ruby-mode
+  :ensure t
+  :defer t)
 #+end_src
 
 ** Rust
