@@ -33,16 +33,6 @@ Here's some configuration for [[https://github.com/bbatsov/solarized-emacs/][bba
   (load-theme 'solarized-dark))
 #+end_src
 
-** Monokai theme
-
-#+begin_src emacs-lisp :tangle no
-(use-package monokai-theme
-  :if (window-system)
-  :ensure t
-  :init
-  (setq monokai-use-variable-pitch nil))
-#+end_src
-
 * Font
 
 [[http://adobe-fonts.github.io/source-code-pro/][Source Code Pro]] is a nice monospaced font.
@@ -142,6 +132,19 @@ Integrates with IPython.
 (use-package python-mode
   :defer t
   :ensure t)
+#+end_src
+
+** Relative line numbers
+
+#+begin_src emacs-lisp
+(use-package linum-relative
+  :defer t
+  :ensure t
+  :init
+  (setq linum-relative-current-symbol ""))
+
+(global-linum-mode nil)
+(linum-relative-toggle)
 #+end_src
 
 ** Ruby
