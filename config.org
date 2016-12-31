@@ -100,6 +100,22 @@ According to [[http://emmet.io/][their website]], "Emmet — the essential toolk
   (evil-mode 1))
 #+end_src
 
+** Fill column indicator
+
+#+begin_src emacs-lisp
+(use-package fill-column-indicator
+  :defer t
+  :ensure t
+  :init
+  :config
+  (progn
+    (setq fci-rule-column 120)
+    (setq fci-rule-width 5)))
+
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode t)))
+(global-fci-mode t)
+#+end_src
+
 ** Magit
 
 A great interface for git projects. It's much more pleasant to use
