@@ -20,17 +20,9 @@ customize settings in [[file:init.el][init.el]].
 
 * Themes
 
-** Solarized theme
-
-Here's some configuration for [[https://github.com/bbatsov/solarized-emacs/][bbatsov's solarized themes]].
+** Monokai theme
 
 #+begin_src emacs-lisp
-;; (use-package solarized-theme
-;;   :defer 10
-;;   :ensure t
-;;   :init
-;;   (setq solarized-use-variable-pitch nil))
-
 (use-package monokai-theme
   :if (window-system)
   :ensure t
