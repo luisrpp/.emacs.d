@@ -49,6 +49,12 @@ And here's how we tell Emacs to use the font we want to use.
 * Sane defaults
 
 #+begin_src emacs-lisp
+;; Display column number
+(column-number-mode)
+
+;; Highlight line
+(global-hl-line-mode)
+
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
 (set-terminal-coding-system 'utf-8) ; pretty
