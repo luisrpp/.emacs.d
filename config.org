@@ -25,12 +25,17 @@ customize settings in [[file:init.el][init.el]].
 Here's some configuration for [[https://github.com/bbatsov/solarized-emacs/][bbatsov's solarized themes]].
 
 #+begin_src emacs-lisp
-(use-package solarized-theme
-  :defer 10
+;; (use-package solarized-theme
+;;   :defer 10
+;;   :ensure t
+;;   :init
+;;   (setq solarized-use-variable-pitch nil))
+
+(use-package monokai-theme
+  :if (window-system)
   :ensure t
   :init
-  (setq solarized-use-variable-pitch nil)
-  (load-theme 'solarized-dark))
+  (load-theme 'monokai))
 #+end_src
 
 * Font
@@ -46,7 +51,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-14"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
 #+end_src
 
 * Sane defaults
@@ -68,7 +73,7 @@ And here's how we tell Emacs to use the font we want to use.
 (setq auto-save-default nil)
 #+end_src
 
-* Packages
+* ELPA packages and configurations
 
 ** Clojure
 
@@ -116,6 +121,19 @@ According to [[http://emmet.io/][their website]], "Emmet — the essential toolk
 (global-fci-mode t)
 #+end_src
 
+** Line numbers
+
+#+begin_src emacs-lisp
+(use-package linum-relative
+  :defer t
+  :ensure t
+  :init
+  (setq linum-relative-current-symbol ""))
+
+(global-linum-mode nil)
+(linum-relative-toggle)
+#+end_src
+
 ** Magit
 
 A great interface for git projects. It's much more pleasant to use
@@ -150,17 +168,14 @@ Integrates with IPython.
   :ensure t)
 #+end_src
 
-** Relative line numbers
+** Powerline
 
 #+begin_src emacs-lisp
-(use-package linum-relative
-  :defer t
+(use-package powerline
   :ensure t
   :init
-  (setq linum-relative-current-symbol ""))
-
-(global-linum-mode nil)
-(linum-relative-toggle)
+  (powerline-center-theme)
+  (setq powerline-default-separator 'wave))
 #+end_src
 
 ** Ruby
