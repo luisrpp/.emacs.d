@@ -8,8 +8,8 @@
   (scroll-bar-mode -1)
 (tooltip-mode -1))
 
-; (setq inhibit-startup-message t)
-; (setq initial-scratch-message "")
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
 
 ;;; Set up package
 (require 'package)

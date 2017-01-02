@@ -49,9 +49,6 @@ And here's how we tell Emacs to use the font we want to use.
 * Sane defaults
 
 #+begin_src emacs-lisp
-;; Display column number
-(column-number-mode)
-
 ;; Highlight line
 (global-hl-line-mode)
 
