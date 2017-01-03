@@ -43,7 +43,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-14"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
@@ -70,6 +70,9 @@ We can also define some keybindings to increase and decrease the font size:
 
 ;; Highlight line
 (global-hl-line-mode)
+
+;; Scroll smoothly
+(setq scroll-step 1)
 
 ;; OS Clipboard integration
 (setq x-select-enable-clipboard t)
@@ -121,7 +124,88 @@ Delete trailing whitespace automatically on save.
 (global-fci-mode t)
 #+end_src
 
-* Powerline
+* Editor augmentation
+
+** Evil-mode
+
+Evil is an extensible vi layer for Emacs.
+
+#+begin_src emacs-lisp :results none
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1)
+
+  (use-package evil-leader
+    :ensure t
+    :config
+    (global-evil-leader-mode))
+
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode))
+
+  (use-package evil-indent-textobject
+    :ensure t))
+#+end_src
+
+** Projectile
+
+[[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to
+provide a nice set of features operating on a project level without introducing external dependencies(when feasible).
+For instance - finding project files has a portable implementation written in pure Emacs Lisp without the use of GNU
+find (but for performance sake an indexing mechanism backed by external commands exists as well).
+
+#+begin_src emacs-lisp :results none
+(use-package projectile
+  :ensure t
+  :defer t
+  :diminish
+  :config
+  (projectile-global-mode)
+)
+#+end_src
+
+** Recentf mode
+
+As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows
+recently opened files in the buffer list for fast switching to them.
+
+#+begin_src emacs-lisp :results none
+(use-package recentf
+  :ensure t
+  :defer t
+  :diminish
+  :config
+  (recentf-mode)
+  :bind
+  ("C-x C-r" . recentf-open-files)
+)
+#+end_src
+
+** Neotree
+
+Sometimes I need to see the directory structure for the current file. The
+[[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable pane that will pop up and
+disappear with the =F8= key.
+
+#+begin_src emacs-lisp :results none
+(use-package neotree
+  :ensure t
+  :defer t
+  :bind
+  ([f8] . neotree-toggle)
+  :init
+  (add-hook 'neotree-mode-hook
+            (lambda ()
+              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+              (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+              (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+              (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter))))
+#+end_src
+
+** Powerline
 
 #+begin_src emacs-lisp
 (use-package powerline
@@ -129,15 +213,6 @@ Delete trailing whitespace automatically on save.
   :init
   (powerline-center-theme)
   (setq powerline-default-separator 'wave))
-#+end_src
-
-* Evil-mode
-
-#+begin_src emacs-lisp
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1))
 #+end_src
 
 * Development
@@ -173,6 +248,19 @@ access magit.
 (use-package clojure-mode
   :defer t
   :ensure t)
+#+end_src
+
+** Docker
+
+#+begin_src emacs-lisp
+(use-package docker
+  :ensure t
+  :defer t
+  :diminish)
+
+(use-package dockerfile-mode
+  :ensure t
+  :defer t)
 #+end_src
 
 ** Emmet
