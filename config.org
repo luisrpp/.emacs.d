@@ -44,14 +44,16 @@ And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+
+;; Some keybindings to increase and decrease the font size.
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+;; C-x C-0 restores the default font size
 #+end_src
 
 * Sane defaults
 
 #+begin_src emacs-lisp
-;; Highlight line
-(global-hl-line-mode)
-
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8) ; pretty
 (set-terminal-coding-system 'utf-8) ; pretty
@@ -63,12 +65,104 @@ And here's how we tell Emacs to use the font we want to use.
 ;; Don't beep at me
 (setq visible-bell t)
 
+;; Highlight line
+(global-hl-line-mode)
+
+;; OS Clipboard integration
+(setq x-select-enable-clipboard t)
+
 ;; Stop creating “backup~” files and “#autosave#” files
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
+;; Reloading files
+(global-auto-revert-mode t)
 #+end_src
 
-* ELPA packages and configurations
+* Line numbers
+
+#+begin_src emacs-lisp
+(use-package linum-relative
+  :defer t
+  :ensure t
+  :init
+  (setq linum-relative-current-symbol ""))
+
+(global-linum-mode t)
+;(linum-relative-toggle)
+#+end_src
+
+* Whitespace
+
+** Trailing whitespace
+
+Delete trailing whitespace automatically on save.
+
+#+begin_src emacs-lisp :results none
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+* Fill column indicator
+
+#+begin_src emacs-lisp
+(use-package fill-column-indicator
+  :defer t
+  :ensure t
+  :init
+  :config
+  (progn
+    (setq fci-rule-column 120)
+    (setq fci-rule-width 5)))
+
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode t)))
+(global-fci-mode t)
+#+end_src
+
+* Powerline
+
+#+begin_src emacs-lisp
+(use-package powerline
+  :ensure t
+  :init
+  (powerline-center-theme)
+  (setq powerline-default-separator 'wave))
+#+end_src
+
+* Evil-mode
+
+#+begin_src emacs-lisp
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+#+end_src
+
+* Development
+
+** Syntax highlighting and linting
+
+Syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
+
+#+begin_src emacs-lisp
+(use-package flycheck
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
+#+end_src
+
+** Magit
+
+A great interface for git projects. It's much more pleasant to use
+than the git interface on the command line. Use an easy keybinding to
+access magit.
+
+#+begin_src emacs-lisp
+(use-package magit
+  :ensure t
+  :defer t
+  :bind ("C-x g" . magit-status))
+#+end_src
 
 ** Clojure
 
@@ -85,61 +179,11 @@ According to [[http://emmet.io/][their website]], "Emmet — the essential toolk
 #+begin_src emacs-lisp
 (use-package emmet-mode
   :ensure t
+  :defer t
   :commands emmet-mode
   :config
   (add-hook 'html-mode-hook 'emmet-mode)
   (add-hook 'css-mode-hook 'emmet-mode))
-#+end_src
-
-** Evil
-
-#+begin_src emacs-lisp
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1))
-#+end_src
-
-** Fill column indicator
-
-#+begin_src emacs-lisp
-(use-package fill-column-indicator
-  :defer t
-  :ensure t
-  :init
-  :config
-  (progn
-    (setq fci-rule-column 120)
-    (setq fci-rule-width 5)))
-
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode t)))
-(global-fci-mode t)
-#+end_src
-
-** Line numbers
-
-#+begin_src emacs-lisp
-(use-package linum-relative
-  :defer t
-  :ensure t
-  :init
-  (setq linum-relative-current-symbol ""))
-
-(global-linum-mode nil)
-(linum-relative-toggle)
-#+end_src
-
-** Magit
-
-A great interface for git projects. It's much more pleasant to use
-than the git interface on the command line. Use an easy keybinding to
-access magit.
-
-#+begin_src emacs-lisp
-(use-package magit
-  :ensure t
-  :defer t
-  :bind ("C-x g" . magit-status))
 #+end_src
 
 ** Markdown mode
@@ -147,6 +191,7 @@ access magit.
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :ensure t
+  :defer t
   :mode (("\\.markdown\\'" . markdown-mode)
          ("\\.md\\'"       . markdown-mode)))
 #+end_src
@@ -157,18 +202,8 @@ Integrates with IPython.
 
 #+begin_src emacs-lisp
 (use-package python-mode
-  :defer t
-  :ensure t)
-#+end_src
-
-** Powerline
-
-#+begin_src emacs-lisp
-(use-package powerline
   :ensure t
-  :init
-  (powerline-center-theme)
-  (setq powerline-default-separator 'wave))
+  :defer t)
 #+end_src
 
 ** Ruby
@@ -181,8 +216,20 @@ Integrates with IPython.
 
 ** Rust
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package rust-mode
   :ensure t
   :defer t)
-#+END_SRC
+#+end_src
+
+** YAML
+
+Add a major mode for yaml highlighting
+
+#+begin_src emacs-lisp
+(use-package yaml-mode
+  :ensure t
+  :defer t
+  :diminish)
+#+end_src
+
