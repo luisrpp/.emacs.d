@@ -170,8 +170,7 @@ find (but for performance sake an indexing mechanism backed by external commands
   :defer t
   :diminish
   :config
-  (projectile-global-mode)
-)
+  (projectile-global-mode))
 #+end_src
 
 ** Recentf mode
@@ -187,8 +186,7 @@ recently opened files in the buffer list for fast switching to them.
   :config
   (recentf-mode)
   :bind
-  ("C-x C-r" . recentf-open-files)
-)
+  ("C-x C-r" . recentf-open-files))
 #+end_src
 
 ** Neotree
