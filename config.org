@@ -44,8 +44,11 @@ And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+#+end_src
 
-;; Some keybindings to increase and decrease the font size.
+We can also define some keybindings to increase and decrease the font size:
+
+#+begin_src emacs-lisp
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 ;; C-x C-0 restores the default font size
