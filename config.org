@@ -114,16 +114,12 @@ Delete trailing whitespace automatically on save.
 
 #+begin_src emacs-lisp
 (use-package fill-column-indicator
-  :defer t
   :ensure t
-  :init
   :config
   (progn
-    (setq fci-rule-column 120)
-    (setq fci-rule-width 5)))
-
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode t)))
-(global-fci-mode t)
+    (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
+    (setq fci-rule-width 5)
+    (setf fci-rule-color "#444")))
 #+end_src
 
 * Editor augmentation
