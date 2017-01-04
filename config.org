@@ -28,6 +28,16 @@ customize settings in [[file:init.el][init.el]].
   :ensure t)
 #+end_src
 
+** Monokai theme
+
+#+begin_src emacs-lisp
+(use-package monokai-theme
+  :if (window-system)
+  :ensure t)
+;  :init
+;  (load-theme 'monokai))
+#+end_src
+
 ** Solarized theme
 
 #+begin_src emacs-lisp
@@ -36,6 +46,7 @@ customize settings in [[file:init.el][init.el]].
   :defer 10
   :init
   (progn
+    (load-theme 'solarized-dark)
     (setq x-underline-at-descent-line t)
     (set-face-attribute `mode-line nil
                         :box nil)
@@ -43,16 +54,6 @@ customize settings in [[file:init.el][init.el]].
                         :box nil))
   :config
   (setq color-theme-is-global t))
-#+end_src
-
-** Monokai theme
-
-#+begin_src emacs-lisp
-(use-package monokai-theme
-  :if (window-system)
-  :ensure t
-  :init
-  (load-theme 'monokai))
 #+end_src
 
 * Font
@@ -281,11 +282,11 @@ disappear with the =F8= key.
 ** Powerline
 
 #+begin_src emacs-lisp
-(use-package powerline
-  :ensure t
-  :init
-  (powerline-center-theme)
-  (setq powerline-default-separator 'wave))
+;(use-package powerline
+;  :ensure t
+;  :init
+;  (powerline-center-theme)
+;  (setq powerline-default-separator 'wave))
 #+end_src
 
 * Development
