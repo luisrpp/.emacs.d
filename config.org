@@ -28,14 +28,6 @@ customize settings in [[file:init.el][init.el]].
   :ensure t)
 #+end_src
 
-** Monokai theme
-
-#+begin_src emacs-lisp
-(use-package monokai-theme
-  :if (window-system)
-  :ensure t)
-#+end_src
-
 ** Solarized theme
 
 #+begin_src emacs-lisp
@@ -44,7 +36,6 @@ customize settings in [[file:init.el][init.el]].
   :defer 10
   :init
   (progn
-    (load-theme 'solarized-dark)
     (setq x-underline-at-descent-line t)
     (set-face-attribute `mode-line nil
                         :box nil)
@@ -52,6 +43,16 @@ customize settings in [[file:init.el][init.el]].
                         :box nil))
   :config
   (setq color-theme-is-global t))
+#+end_src
+
+** Monokai theme
+
+#+begin_src emacs-lisp
+(use-package monokai-theme
+  :if (window-system)
+  :ensure t
+  :init
+  (load-theme 'monokai))
 #+end_src
 
 * Font
@@ -67,7 +68,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-14"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
