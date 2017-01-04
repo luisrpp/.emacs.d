@@ -92,6 +92,9 @@ We can also define some keybindings to increase and decrease the font size:
 ;; Don't beep at me
 (setq visible-bell t)
 
+;; Turn off the blinking cursor
+(blink-cursor-mode -1)
+
 ;; Highlight line
 (global-hl-line-mode)
 
@@ -393,9 +396,10 @@ Integrates with IPython.
   :ensure t
   :defer t
   :config
-  (setq rspec-use-rake-when-possible nil)
-  (setq rspec-use-bundler-when-possible t)
-  (setq rspec-use-rvm-when-possible t))
+  (setq compilation-scroll-output t
+        rspec-use-rake-when-possible nil
+        rspec-use-bundler-when-possible t
+        rspec-use-rvm-when-possible t))
 #+end_src
 
 ** Rust
