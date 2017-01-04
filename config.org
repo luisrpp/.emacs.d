@@ -152,8 +152,7 @@ Delete trailing whitespace automatically on save.
   :config
   (progn
     (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
-    (setq fci-rule-width 5)
-    (setf fci-rule-color "#073642")))
+    (setq fci-rule-width 3)))
 #+end_src
 
 * Editor augmentation
