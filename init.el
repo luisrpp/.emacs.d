@@ -8,6 +8,8 @@
   (scroll-bar-mode -1)
 (tooltip-mode -1))
 
+(toggle-frame-maximized)
+
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
 

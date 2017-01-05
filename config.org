@@ -69,7 +69,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-14"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
@@ -289,6 +289,39 @@ disappear with the =F8= key.
 ;  (setq powerline-default-separator 'wave))
 #+end_src
 
+** Autocompletion
+
+#+begin_src emacs-lisp :results none
+(use-package company
+  :ensure t
+  :init
+  (use-package helm-company
+    :ensure t
+    :config
+    (define-key company-mode-map (kbd "C-SPC") 'helm-company)
+    (define-key company-active-map (kbd "C-SPC") 'helm-company)
+  )
+  :config
+  (add-hook 'prog-mode-hook 'company-mode)
+  (progn
+  ;; Company mode interferes with yasnippets, so this fixes it and integrates them:
+  ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
+  ;; Add yasnippet support for all company backends
+  ;; https://github.com/syl20bnr/spacemacs/pull/179
+  (defvar company-mode/enable-yas t
+    "Enable yasnippet for all backends.")
+
+  (defun company-mode/backend-with-yas (backend)
+    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
+
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+  )
+)
+#+end_src
+
 * Development
 
 ** Syntax highlighting and linting
@@ -301,6 +334,15 @@ Syntax highlighting and linting when programming. See https://github.com/flychec
   :defer t
   :init
   (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
+#+end_src
+
+** Code snippet handling
+
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
 #+end_src
 
 ** Magit
@@ -401,6 +443,29 @@ Integrates with IPython.
         rspec-use-rake-when-possible nil
         rspec-use-bundler-when-possible t
         rspec-use-rvm-when-possible t))
+#+end_src
+
+*** Others
+
+#+begin_src emacs-lisp
+;(use-package ruby-end
+;  :ensure t)
+#+end_src
+
+The following allows using binding.pry in rspec-mode.
+
+#+begin_src emacs-lisp
+(use-package inf-ruby
+  :ensure t
+  :init
+  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+  (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
+
+(use-package robe
+  :ensure t
+  :init
+  (add-hook 'ruby-mode-hook 'robe-mode))
 #+end_src
 
 ** Rust
