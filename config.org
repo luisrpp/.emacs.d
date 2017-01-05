@@ -299,25 +299,33 @@ disappear with the =F8= key.
     :ensure t
     :config
     (define-key company-mode-map (kbd "C-SPC") 'helm-company)
-    (define-key company-active-map (kbd "C-SPC") 'helm-company)
-  )
+    (define-key company-active-map (kbd "C-SPC") 'helm-company))
   :config
   (add-hook 'prog-mode-hook 'company-mode)
   (progn
-  ;; Company mode interferes with yasnippets, so this fixes it and integrates them:
-  ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
-  ;; Add yasnippet support for all company backends
-  ;; https://github.com/syl20bnr/spacemacs/pull/179
-  (defvar company-mode/enable-yas t
-    "Enable yasnippet for all backends.")
+    (setq company-dabbrev-downcase 0)
+    (setq company-idle-delay 0.3)
+    (setq company-begin-commands '(self-insert-command))
 
-  (defun company-mode/backend-with-yas (backend)
-    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
+    (eval-after-load 'company
+      '(progn
+         (define-key company-active-map (kbd "TAB") 'company-select-next)
+         (define-key company-active-map [tab] 'company-select-next)))
 
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+    ;; Company mode interferes with yasnippets, so this fixes it and integrates them:
+    ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
+    ;; Add yasnippet support for all company backends
+    ;; https://github.com/syl20bnr/spacemacs/pull/179
+    (defvar company-mode/enable-yas t
+      "Enable yasnippet for all backends.")
+
+    (defun company-mode/backend-with-yas (backend)
+      (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+          backend
+        (append (if (consp backend) backend (list backend))
+                '(:with company-yasnippet))))
+
+    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
   )
 )
 #+end_src
@@ -465,7 +473,10 @@ The following allows using binding.pry in rspec-mode.
 (use-package robe
   :ensure t
   :init
-  (add-hook 'ruby-mode-hook 'robe-mode))
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  :config
+  (eval-after-load 'company
+    '(push 'company-robe company-backends)))
 #+end_src
 
 ** Rust
