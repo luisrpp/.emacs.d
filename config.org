@@ -304,7 +304,7 @@ disappear with the =F8= key.
   (add-hook 'prog-mode-hook 'company-mode)
   (progn
     (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0.3)
+    (setq company-idle-delay 0.2)
     (setq company-begin-commands '(self-insert-command))
 
     (eval-after-load 'company
