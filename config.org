@@ -84,11 +84,11 @@ We can also define some keybindings to increase and decrease the font size:
 
 #+begin_src emacs-lisp
 ;; UTF-8 please
-(setq locale-coding-system 'utf-8) ; pretty
-(set-terminal-coding-system 'utf-8) ; pretty
-(set-keyboard-coding-system 'utf-8) ; pretty
-(set-selection-coding-system 'utf-8) ; please
-(prefer-coding-system 'utf-8) ; with sugar on top
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 (setq-default indent-tabs-mode nil)
 
 ;; Don't beep at me
@@ -446,6 +446,7 @@ Integrates with IPython.
   :ensure t
   :defer t
   :config
+  (setq ruby-insert-encoding-magic-comment nil)
   (evil-leader/set-key-for-mode 'ruby-mode
     "r" 'rspec-verify
     "R" 'rspec-verify-method
