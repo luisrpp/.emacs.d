@@ -192,17 +192,17 @@ Evil is an extensible vi layer for Emacs.
 
 ** Ag
 
-At first, install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
-Here is how to install it on Arch Linux:
-
-#+begin_src sh :tangle no
-sudo pacman -S the_silver_searcher
-#+end_src
-
 #+begin_src emacs-lisp
 (use-package ag
   :commands ag
   :ensure t)
+#+end_src
+
+You will need to install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
+Here is how to install it on Arch Linux:
+
+#+begin_src sh :tangle no
+sudo pacman -S the_silver_searcher
 #+end_src
 
 ** Heml
