@@ -426,7 +426,17 @@ Integrates with IPython.
 #+begin_src emacs-lisp
 (use-package ruby-mode
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (evil-leader/set-key-for-mode 'ruby-mode
+    "r" 'rspec-verify
+    "R" 'rspec-verify-method
+    "A" 'rspec-verify-all
+    "tt" 'rspec-toggle-spec-and-target
+    "te" 'rspec-toggle-spec-and-target-find-example
+    "sw" 'rspec-find-spec-or-target-other-window
+    "u" 'rubocop-check-current-file
+    "U" 'rubocop-check-project))
 #+end_src
 
 *** RVM
@@ -451,6 +461,14 @@ Integrates with IPython.
         rspec-use-rake-when-possible nil
         rspec-use-bundler-when-possible t
         rspec-use-rvm-when-possible t))
+#+end_src
+
+*** Rubocop
+
+#+begin_src emacs-lisp
+(use-package rubocop
+  :ensure t
+  :defer t)
 #+end_src
 
 *** Others
