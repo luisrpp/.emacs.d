@@ -178,7 +178,8 @@ Evil is an extensible vi layer for Emacs.
       (evil-leader/set-leader ",")
       (global-evil-leader-mode))
       (evil-leader/set-key
-        "cc" 'evilnc-comment-or-uncomment-lines))
+        "cc" 'evilnc-comment-or-uncomment-lines
+        "f" 'helm-ag))
 
   (use-package evil-surround
     :ensure t
@@ -190,6 +191,13 @@ Evil is an extensible vi layer for Emacs.
 #+end_src
 
 ** Ag
+
+At first, install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
+Here is how to install it on Arch Linux:
+
+#+begin_src sh :tangle no
+sudo pacman -S the_silver_searcher
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package ag
@@ -209,7 +217,9 @@ Evil is an extensible vi layer for Emacs.
             :ensure t
             :commands helm-projectile
             :bind ("C-c p h" . helm-projectile))
-          (use-package helm-ag :defer 10  :ensure t)
+          (use-package helm-ag
+            :defer 10
+            :ensure t)
           (setq helm-locate-command "mdfind -interpret -name %s %s"
                 helm-ff-newfile-prompt-p nil
                 helm-M-x-fuzzy-match t)
