@@ -476,7 +476,7 @@ Integrates with IPython.
   :ensure t
   :defer t
   :config
-  (setq compilation-scroll-output t
+  (setq compilation-scroll-output 'first-error
         rspec-use-rake-when-possible nil
         rspec-use-bundler-when-possible t
         rspec-use-rvm-when-possible t))
