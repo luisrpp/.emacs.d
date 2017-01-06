@@ -69,7 +69,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-14"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
@@ -187,6 +187,14 @@ Evil is an extensible vi layer for Emacs.
 
   (use-package evil-indent-textobject
     :ensure t))
+#+end_src
+
+** Ag
+
+#+begin_src emacs-lisp
+(use-package ag
+  :commands ag
+  :ensure t)
 #+end_src
 
 ** Heml
