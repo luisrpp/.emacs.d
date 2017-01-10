@@ -130,7 +130,7 @@ We can also define some keybindings to increase and decrease the font size:
   :init
   (setq linum-relative-current-symbol ""))
 
-(global-linum-mode t)
+;(global-linum-mode t)
 ;(setq linum-format "%4d\u2502")
 ;(linum-relative-toggle)
 #+end_src
@@ -488,6 +488,14 @@ Integrates with IPython.
 (use-package rubocop
   :ensure t
   :defer t)
+#+end_src
+
+*** Line numbers
+
+#+begin_src emacs-lisp
+(defun my-ruby-mode-hook () 
+  (linum-mode 1)) 
+(add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
 #+end_src
 
 *** Others
