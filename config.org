@@ -229,7 +229,6 @@ sudo pacman -S the_silver_searcher
             :bind ("H-w" . helm-swoop)))
   :bind (("C-c h" . helm-command-prefix)
          ("C-x b" . helm-mini)
-         ("C-`" . helm-resume)
          ("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)))
 #+end_src
