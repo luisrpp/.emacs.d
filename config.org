@@ -160,7 +160,7 @@ Delete trailing whitespace automatically on save.
 
 * Terminal
 
-[[https://www.emacswiki.org/emacs/MultiTerm]MultiTerm] is a mode based on term.el,
+[[https://www.emacswiki.org/emacs/MultiTerm][MultiTerm]] is a mode based on term.el,
 for managing multiple terminal buffers in Emacs. Use the =F6= key to toggle the
 terminal.
 
