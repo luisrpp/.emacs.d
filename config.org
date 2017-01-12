@@ -119,6 +119,8 @@ We can also define some keybindings to increase and decrease the font size:
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq uniquify-buffer-name-style 'forward)
 #+end_src
 
 * Line numbers
@@ -154,6 +156,27 @@ Delete trailing whitespace automatically on save.
   (progn
     (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
     (setq fci-rule-width 3)))
+#+end_src
+
+* Terminal
+
+[[https://www.emacswiki.org/emacs/MultiTerm]MultiTerm] is a mode based on term.el,
+for managing multiple terminal buffers in Emacs. Use the =F6= key to toggle the
+terminal.
+
+#+begin_src emacs-lisp
+(use-package multi-term
+  :ensure t
+  :bind
+  ([f6] . multi-term-dedicated-toggle)
+  :config
+  (progn
+    (setq multi-term-buffer-name "term"
+          multi-term-program "/bin/zsh")))
+
+;; To enable tab-completion
+(add-hook 'term-mode-hook (lambda()
+        (setq yas-dont-activate t)))
 #+end_src
 
 * Editor augmentation
