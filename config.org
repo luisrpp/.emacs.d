@@ -176,7 +176,7 @@ terminal.
 
 ;; To enable tab-completion
 (add-hook 'term-mode-hook (lambda()
-        (setq yas-dont-activate t)))
+  (setq yas-dont-activate t)))
 #+end_src
 
 * Editor augmentation
