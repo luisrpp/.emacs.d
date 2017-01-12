@@ -211,6 +211,10 @@ Evil is an extensible vi layer for Emacs.
 
   (use-package evil-indent-textobject
     :ensure t))
+
+  (use-package org-evil
+    :ensure t
+    :defer t)
 #+end_src
 
 ** Ag
