@@ -559,6 +559,14 @@ The following allows using binding.pry in rspec-mode.
   :defer t)
 #+end_src
 
+** SML
+
+#+begin_src emacs-lisp
+(use-package sml-mode
+  :ensure t
+  :defer t)
+#+end_src
+
 ** YAML
 
 Add a major mode for yaml highlighting
