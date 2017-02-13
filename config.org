@@ -202,7 +202,8 @@ Evil is an extensible vi layer for Emacs.
       (global-evil-leader-mode))
       (evil-leader/set-key
         "cc" 'evilnc-comment-or-uncomment-lines
-        "f" 'helm-ag-project-root))
+        "f" 'helm-ag-project-root
+        "p" 'helm-projectile))
 
   (use-package evil-surround
     :ensure t
