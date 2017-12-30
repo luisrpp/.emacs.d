@@ -19,9 +19,11 @@ customize settings in [[file:init.el][init.el]].
 (load custom-file)
 #+end_src
 
-* Themes
+* Appearance
 
-** Monokai theme
+** Themes
+
+*** Monokai theme
 
 #+begin_src emacs-lisp
 (use-package monokai-theme
@@ -31,7 +33,7 @@ customize settings in [[file:init.el][init.el]].
   (load-theme 'monokai))
 #+end_src
 
-* Font
+** Font
 
 [[http://adobe-fonts.github.io/source-code-pro/][Source Code Pro]] is a nice monospaced font.
 
