@@ -1,3 +1,10 @@
+;;; init.el --- Luis Roberto P. Paula's Emacs init file.
+;;; Commentary:
+;;  This is my configuration for Emacs.  The configuration depends on Org mode.
+;;  init.el sets up a few initial GUI settings, bootstraps use-package, and loads
+;;  config.org, which is where the majority of the configuration magic happens.
+
+;;; Code:
 (setq gc-cons-threshold 400000000)
 
 ;;; Begin initialization
@@ -41,3 +48,6 @@
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
 (setq gc-cons-threshold 800000)
+
+(provide 'emacs-init)
+;;; init.el ends here
