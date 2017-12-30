@@ -31,7 +31,8 @@
 ;; From use-package README
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)                ;; if you use :diminish
+
+; (require 'diminish)
 (require 'bind-key)
 
 (server-start)

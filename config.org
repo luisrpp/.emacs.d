@@ -8,6 +8,7 @@
       user-mail-address "luisrpp@gmail.com")
 #+end_src
 
+
 * Customize settings
 
 Set up the customize file to its own separate file, instead of saving
@@ -19,32 +20,6 @@ customize settings in [[file:init.el][init.el]].
 #+end_src
 
 * Themes
-
-** Dracula theme
-
-#+begin_src emacs-lisp
-(use-package dracula-theme
-  :if (window-system)
-  :ensure t)
-#+end_src
-
-** Solarized theme
-
-#+begin_src emacs-lisp
-(use-package solarized-theme
-  :ensure t
-  :defer 10
-  :init
-  (progn
-;    (load-theme 'solarized-dark)
-    (setq x-underline-at-descent-line t)
-    (set-face-attribute `mode-line nil
-                        :box nil)
-    (set-face-attribute `mode-line-inactive nil
-                        :box nil))
-  :config
-  (setq color-theme-is-global t))
-#+end_src
 
 ** Monokai theme
 
@@ -95,19 +70,23 @@ We can also define some keybindings to increase and decrease the font size:
 (setq visible-bell t)
 
 ;; Turn off the blinking cursor
-(blink-cursor-mode -1)
+; (blink-cursor-mode -1)
 
 ;; Highlight line
 (global-hl-line-mode)
 
 ;; Scroll smoothly
 (setq scroll-step 1)
+(setq scroll-conservatively 10)
+(setq scroll-margin 7)
+(setq scroll-conservatively 5)
 
 ;; OS Clipboard integration
 (setq x-select-enable-clipboard t)
 (setq x-select-enable-primary t)
 (setq mouse-drag-copy-region t)
 
+;; Allows one to see matching pairs of parentheses and other characters
 (show-paren-mode t)
 
 ;; Stop creating “backup~” files and “#autosave#” files
@@ -121,102 +100,32 @@ We can also define some keybindings to increase and decrease the font size:
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq uniquify-buffer-name-style 'forward)
-#+end_src
 
-* Line numbers
+;; Line and column numbering
+(column-number-mode 1)
+(line-number-mode 1)
 
-#+begin_src emacs-lisp
-(use-package linum-relative
-  :defer t
-  :ensure t
-  :init
-  (setq linum-relative-current-symbol ""))
-
-;(global-linum-mode t)
-;(setq linum-format "%4d\u2502")
-;(linum-relative-toggle)
-#+end_src
-
-* Whitespace
-
-** Trailing whitespace
-
-Delete trailing whitespace automatically on save.
-
-#+begin_src emacs-lisp :results none
+;; Delete trailing whitespace automatically on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+end_src
 
-* Fill column indicator
-
-#+begin_src emacs-lisp
+;; Fill column indicator
 (use-package fill-column-indicator
   :ensure t
   :config
   (progn
     (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
     (setq fci-rule-width 3)))
-#+end_src
 
-* Terminal
+;; Display time
+(load "time" t t)
+(display-time)
 
-[[https://www.emacswiki.org/emacs/MultiTerm][MultiTerm]] is a mode based on term.el,
-for managing multiple terminal buffers in Emacs. Use the =F6= key to toggle the
-terminal.
-
-#+begin_src emacs-lisp
-(use-package multi-term
-  :ensure t
-  :bind
-  ([f6] . multi-term-dedicated-toggle)
-  :config
-  (progn
-    (setq multi-term-buffer-name "term"
-          multi-term-program "/bin/zsh")))
-
-;; To enable tab-completion
-(add-hook 'term-mode-hook (lambda()
-  (setq yas-dont-activate t)))
+;; Display pictures and other compressed files
+(setq auto-image-file-mode t)
+(setq auto-compression-mode t)
 #+end_src
 
 * Editor augmentation
-
-** Evil-mode
-
-Evil is an extensible vi layer for Emacs.
-
-#+begin_src emacs-lisp :results none
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1)
-
-  (use-package evil-nerd-commenter
-    :ensure t)
-
-  (use-package evil-leader
-    :ensure t
-    :config
-    (progn
-      (evil-leader/set-leader ",")
-      (global-evil-leader-mode))
-      (evil-leader/set-key
-        "cc" 'evilnc-comment-or-uncomment-lines
-        "f" 'helm-ag-project-root
-        "p" 'helm-projectile))
-
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode))
-
-  (use-package evil-indent-textobject
-    :ensure t))
-
-  (use-package org-evil
-    :ensure t
-    :defer t)
-#+end_src
 
 ** Ag
 
@@ -233,34 +142,6 @@ Here is how to install it on Arch Linux:
 sudo pacman -S the_silver_searcher
 #+end_src
 
-** Heml
-
-#+begin_src emacs-lisp
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :init (progn
-          (require 'helm-config)
-          (use-package helm-projectile
-            :ensure t
-            :commands helm-projectile
-            :bind ("C-c p h" . helm-projectile))
-          (use-package helm-ag
-            :defer 10
-            :ensure t)
-          (setq helm-locate-command "mdfind -interpret -name %s %s"
-                helm-ff-newfile-prompt-p nil
-                helm-M-x-fuzzy-match t)
-          (helm-mode)
-          (use-package helm-swoop
-            :ensure t
-            :bind ("H-w" . helm-swoop)))
-  :bind (("C-c h" . helm-command-prefix)
-         ("C-x b" . helm-mini)
-         ("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)))
-#+end_src
-
 ** Projectile
 
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to
@@ -275,104 +156,6 @@ find (but for performance sake an indexing mechanism backed by external commands
   :diminish
   :config
   (projectile-global-mode))
-#+end_src
-
-** Recentf mode
-
-As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows
-recently opened files in the buffer list for fast switching to them.
-
-#+begin_src emacs-lisp :results none
-(use-package recentf
-  :ensure t
-  :defer t
-  :bind ("C-x C-r" . helm-recentf)
-  :config
-  (recentf-mode t)
-  (setq recentf-max-saved-items 200)
-  (setq recentf-auto-cleanup 'never
-        recentf-exclude '("[/\\]\\.elpa/"
-                          "[/\\]\\.ido\\.last\\'"
-                          "[/\\]\\.git/" ".*\\.gz\\'"
-                          ".*-autoloads\\.el\\'"
-                          "[/\\]archive-contents\\'"
-                          "[/\\]\\.loaddefs\\.el\\'"
-                          "url/cookies")
-        recentf-save-file (expand-file-name ".recentf" tmp-local-dir)
-        ;; save 100 most recent files
-        recentf-max-saved-items 100))
-#+end_src
-
-** Neotree
-
-Sometimes I need to see the directory structure for the current file. The
-[[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable pane that will pop up and
-disappear with the =F8= key.
-
-#+begin_src emacs-lisp :results none
-(use-package neotree
-  :ensure t
-  :defer t
-  :bind
-  ([f8] . neotree-toggle)
-  :init
-  (add-hook 'neotree-mode-hook
-            (lambda ()
-              (define-key evil-normal-state-local-map (kbd "o") 'neotree-enter)
-              (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-              (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-              (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter))))
-#+end_src
-
-** Powerline
-
-#+begin_src emacs-lisp
-;(use-package powerline
-;  :ensure t
-;  :init
-;  (powerline-center-theme)
-;  (setq powerline-default-separator 'wave))
-#+end_src
-
-** Autocompletion
-
-#+begin_src emacs-lisp :results none
-(use-package company
-  :ensure t
-  :init
-  (use-package helm-company
-    :ensure t
-    :config
-    (define-key company-mode-map (kbd "C-SPC") 'helm-company)
-    (define-key company-active-map (kbd "C-SPC") 'helm-company))
-  :config
-  (add-hook 'prog-mode-hook 'company-mode)
-  (progn
-    (setq company-dabbrev-downcase 0)
-    (setq company-idle-delay 0.2)
-    (setq company-begin-commands '(self-insert-command))
-
-    (eval-after-load 'company
-      '(progn
-         (define-key company-active-map (kbd "TAB") 'company-select-next)
-         (define-key company-active-map [tab] 'company-select-next)))
-
-    ;; Company mode interferes with yasnippets, so this fixes it and integrates them:
-    ;; http://emacs.stackexchange.com/questions/10431/get-company-to-show-suggestions-for-yasnippet-names
-    ;; Add yasnippet support for all company backends
-    ;; https://github.com/syl20bnr/spacemacs/pull/179
-    (defvar company-mode/enable-yas t
-      "Enable yasnippet for all backends.")
-
-    (defun company-mode/backend-with-yas (backend)
-      (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-          backend
-        (append (if (consp backend) backend (list backend))
-                '(:with company-yasnippet))))
-
-    (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-  )
-)
 #+end_src
 
 * Development
@@ -411,169 +194,3 @@ access magit.
   :bind ("C-x g" . magit-status))
 #+end_src
 
-** Clojure
-
-#+begin_src emacs-lisp
-(use-package clojure-mode
-  :defer t
-  :ensure t)
-#+end_src
-
-** Docker
-
-#+begin_src emacs-lisp
-(use-package docker
-  :ensure t
-  :defer t
-  :diminish)
-
-(use-package dockerfile-mode
-  :ensure t
-  :defer t)
-#+end_src
-
-** Emmet
-
-According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
-
-#+begin_src emacs-lisp
-(use-package emmet-mode
-  :ensure t
-  :defer t
-  :commands emmet-mode
-  :config
-  (add-hook 'html-mode-hook 'emmet-mode)
-  (add-hook 'css-mode-hook 'emmet-mode))
-#+end_src
-
-** Markdown mode
-
-#+begin_src emacs-lisp
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :mode (("\\.markdown\\'" . markdown-mode)
-         ("\\.md\\'"       . markdown-mode)))
-#+end_src
-
-** Python
-
-Integrates with IPython.
-
-#+begin_src emacs-lisp
-(use-package python-mode
-  :ensure t
-  :defer t)
-#+end_src
-
-** Ruby
-
-#+begin_src emacs-lisp
-(use-package ruby-mode
-  :ensure t
-  :defer t
-  :config
-  (setq ruby-insert-encoding-magic-comment nil)
-  (evil-leader/set-key-for-mode 'ruby-mode
-    "r" 'rspec-verify
-    "R" 'rspec-verify-method
-    "A" 'rspec-verify-all
-    "tt" 'rspec-toggle-spec-and-target
-    "te" 'rspec-toggle-spec-and-target-find-example
-    "sw" 'rspec-find-spec-or-target-other-window
-    "u" 'rubocop-check-current-file
-    "U" 'rubocop-check-project))
-#+end_src
-
-*** RVM
-
-#+begin_src emacs-lisp
-(use-package rvm
-  :ensure t
-  :defer t
-  :init
-  (rvm-use-default)
-  (rvm-autodetect-ruby))
-#+end_src
-
-*** Rspec
-
-#+begin_src emacs-lisp
-(use-package rspec-mode
-  :ensure t
-  :defer t
-  :config
-  (setq compilation-scroll-output 'first-error
-        rspec-use-rake-when-possible nil
-        rspec-use-bundler-when-possible t
-        rspec-use-rvm-when-possible t))
-#+end_src
-
-*** Rubocop
-
-#+begin_src emacs-lisp
-(use-package rubocop
-  :ensure t
-  :defer t)
-#+end_src
-
-*** Line numbers
-
-#+begin_src emacs-lisp
-(defun my-ruby-mode-hook () 
-  (linum-mode 1)) 
-(add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
-#+end_src
-
-*** Others
-
-#+begin_src emacs-lisp
-;(use-package ruby-end
-;  :ensure t)
-#+end_src
-
-The following allows using binding.pry in rspec-mode.
-
-#+begin_src emacs-lisp
-(use-package inf-ruby
-  :ensure t
-  :init
-  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
-  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-  (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
-
-(use-package robe
-  :ensure t
-  :init
-  (add-hook 'ruby-mode-hook 'robe-mode)
-  :config
-  (eval-after-load 'company
-    '(push 'company-robe company-backends)))
-#+end_src
-
-** Rust
-
-#+begin_src emacs-lisp
-(use-package rust-mode
-  :ensure t
-  :defer t)
-#+end_src
-
-** SML
-
-#+begin_src emacs-lisp
-(use-package sml-mode
-  :ensure t
-  :defer t)
-#+end_src
-
-** YAML
-
-Add a major mode for yaml highlighting
-
-#+begin_src emacs-lisp
-(use-package yaml-mode
-  :ensure t
-  :defer t
-  :diminish)
-#+end_src
