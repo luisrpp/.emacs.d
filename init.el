@@ -39,7 +39,11 @@
 (eval-when-compile
   (require 'use-package))
 
-; (require 'diminish)
+(unless (package-installed-p 'diminish)
+  (package-refresh-contents)
+  (package-install 'diminish))
+(require 'diminish)
+
 (require 'bind-key)
 
 (server-start)
