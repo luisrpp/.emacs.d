@@ -158,7 +158,7 @@ We can also define some keybindings to increase and decrease the font size:
 
 #+begin_src emacs-lisp :results none
 (unless (package-installed-p 'helm)
-(package-install 'helm))
+  (package-install 'helm))
 
 (require 'helm-config)
 (helm-mode t)
