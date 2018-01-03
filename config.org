@@ -258,7 +258,7 @@ recently opened files in the buffer list for fast switching to them.
 
 Sometimes I need to see the directory structure for the current file. The
 [[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable pane that will pop up and
-disappear with the =F8= key.
+disappear with the =F3= key.
 
 #+begin_src emacs-lisp :results none
 (use-package neotree
