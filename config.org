@@ -46,7 +46,7 @@ sudo pacman -S adobe-source-code-pro-fonts
 And here's how we tell Emacs to use the font we want to use.
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+(add-to-list 'default-frame-alist '(font . "Source Code Pro-12"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
@@ -60,6 +60,27 @@ We can also define some keybindings to increase and decrease the font size:
 * Sane defaults
 
 #+begin_src emacs-lisp
+;; Functions
+(defun my-prepend-line (&optional arg)
+  (interactive "P")
+  (move-beginning-of-line arg)
+  (open-line 1))
+
+(defun my-append-line (&optional arg)
+  (interactive "P")
+  (move-end-of-line arg)
+  (open-line 1)
+  (forward-line 1))
+
+;; Kill whole line
+(setq kill-whole-line t)
+(global-set-key (kbd "C-k") 'kill-whole-line)
+(global-set-key (kbd "C-M-k") 'kill-line)
+
+;; Append & prepend
+(global-set-key (kbd "C-o") 'my-append-line)
+(global-set-key (kbd "C-S-o") 'my-prepend-line)
+
 ;; UTF-8 please
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -88,6 +109,9 @@ We can also define some keybindings to increase and decrease the font size:
 (setq x-select-enable-primary t)
 (setq mouse-drag-copy-region t)
 
+;; Rectangle selection
+(global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
+
 ;; Allows one to see matching pairs of parentheses and other characters
 (show-paren-mode t)
 
@@ -101,11 +125,13 @@ We can also define some keybindings to increase and decrease the font size:
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq uniquify-buffer-name-style 'forward)
+(setq uniquify-buffer-name-style 'post-forward)
+(setq uniquify-strip-common-suffix nil)
 
 ;; Line and column numbering
-(column-number-mode 1)
+(global-linum-mode t)
 (line-number-mode 1)
+(column-number-mode 1)
 
 ;; Delete trailing whitespace automatically on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -118,31 +144,12 @@ We can also define some keybindings to increase and decrease the font size:
     (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
     (setq fci-rule-width 3)))
 
-;; Display time
-(load "time" t t)
-(display-time)
-
 ;; Display pictures and other compressed files
 (setq auto-image-file-mode t)
 (setq auto-compression-mode t)
 #+end_src
 
 * Editor augmentation
-
-** Ag
-
-#+begin_src emacs-lisp
-(use-package ag
-  :commands ag
-  :ensure t)
-#+end_src
-
-You will need to install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
-Here is how to install it on Arch Linux:
-
-#+begin_src sh :tangle no
-sudo pacman -S the_silver_searcher
-#+end_src
 
 ** Projectile
 
@@ -152,36 +159,11 @@ For instance - finding project files has a portable implementation written in pu
 find (but for performance sake an indexing mechanism backed by external commands exists as well).
 
 #+begin_src emacs-lisp :results none
-(use-package projectile
-  :ensure t
-  :defer t
-  :diminish
-  :config
-  (projectile-global-mode))
+(unless (package-installed-p 'projectile)
+  (package-install 'projectile))
 #+end_src
 
 * Development
-
-** Syntax highlighting and linting
-
-Syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
-
-#+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
-#+end_src
-
-** Code snippet handling
-
-#+begin_src emacs-lisp
-(use-package yasnippet
-  :ensure t
-  :config
-  (yas-global-mode 1))
-#+end_src
 
 ** Magit
 
@@ -190,9 +172,8 @@ than the git interface on the command line. Use an easy keybinding to
 access magit.
 
 #+begin_src emacs-lisp
-(use-package magit
-  :ensure t
-  :defer t
-  :bind ("C-x g" . magit-status))
-#+end_src
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
 
+(global-set-key (kbd "<f9>") 'magit-status)
+#+end_src
