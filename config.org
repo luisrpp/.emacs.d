@@ -72,6 +72,14 @@ We can also define some keybindings to increase and decrease the font size:
   (open-line 1)
   (forward-line 1))
 
+;; UTF-8 please
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(setq-default indent-tabs-mode nil)
+
 ;; Kill whole line
 (setq kill-whole-line t)
 (global-set-key (kbd "C-k") 'kill-whole-line)
@@ -81,14 +89,6 @@ We can also define some keybindings to increase and decrease the font size:
 (global-set-key (kbd "C-o") 'my-append-line)
 (global-set-key (kbd "C-S-o") 'my-prepend-line)
 
-;; UTF-8 please
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(setq-default indent-tabs-mode nil)
-
 ;; Don't beep at me
 (setq visible-bell t)
 
@@ -97,6 +97,31 @@ We can also define some keybindings to increase and decrease the font size:
 
 ;; Highlight line
 (global-hl-line-mode)
+
+;; Line and column numbering
+(global-linum-mode t)
+(line-number-mode 1)
+(column-number-mode 1)
+
+;; Delete trailing whitespace automatically on save
+(add-hook 'before-save-hook
+  (lambda ()
+    (when (not (derived-mode-p 'markdown-mode))
+      (delete-trailing-whitespace))))
+
+;; Fill column indicator
+(use-package fill-column-indicator
+  :ensure t
+  :config
+  (progn
+    (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
+    (setq fci-rule-width 3)))
+
+;; Rectangle selection
+(global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
+
+;; Allows one to see matching pairs of parentheses and other characters
+(show-paren-mode t)
 
 ;; Scroll smoothly
 (setq scroll-step 1)
@@ -108,12 +133,6 @@ We can also define some keybindings to increase and decrease the font size:
 (setq x-select-enable-clipboard t)
 (setq x-select-enable-primary t)
 (setq mouse-drag-copy-region t)
-
-;; Rectangle selection
-(global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
-
-;; Allows one to see matching pairs of parentheses and other characters
-(show-paren-mode t)
 
 ;; Stop creating “backup~” files and “#autosave#” files
 (setq make-backup-files nil)
@@ -128,28 +147,29 @@ We can also define some keybindings to increase and decrease the font size:
 (setq uniquify-buffer-name-style 'post-forward)
 (setq uniquify-strip-common-suffix nil)
 
-;; Line and column numbering
-(global-linum-mode t)
-(line-number-mode 1)
-(column-number-mode 1)
-
-;; Delete trailing whitespace automatically on save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Fill column indicator
-(use-package fill-column-indicator
-  :ensure t
-  :config
-  (progn
-    (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
-    (setq fci-rule-width 3)))
-
 ;; Display pictures and other compressed files
 (setq auto-image-file-mode t)
 (setq auto-compression-mode t)
 #+end_src
 
 * Editor augmentation
+
+** Helm
+
+#+begin_src emacs-lisp :results none
+(unless (package-installed-p 'helm)
+(package-install 'helm))
+
+(require 'helm-config)
+(helm-mode t)
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+
+(define-key helm-find-files-map (kbd "<tab>") 'helm-execute-persistent-action)
+#+end_src
 
 ** Projectile
 
@@ -161,6 +181,13 @@ find (but for performance sake an indexing mechanism backed by external commands
 #+begin_src emacs-lisp :results none
 (unless (package-installed-p 'projectile)
   (package-install 'projectile))
+
+; Helm - projectile
+(unless (package-installed-p 'helm-projectile)
+  (package-install 'helm-projectile))
+
+(require 'helm-projectile)
+(global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
 #+end_src
 
 * Development
