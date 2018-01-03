@@ -181,6 +181,34 @@ We can also define some keybindings to increase and decrease the font size:
 (define-key helm-find-files-map (kbd "<tab>") 'helm-execute-persistent-action)
 #+end_src
 
+** Ag
+
+#+begin_src emacs-lisp
+(use-package ag
+  :commands ag
+  :ensure t)
+
+(use-package helm-ag
+  :defer 10
+  :ensure t)
+#+end_src
+
+You will need to install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
+Here is how to install it on Arch Linux:
+
+#+begin_src sh :tangle no
+sudo pacman -S the_silver_searcher
+#+end_src
+
+** Dired+
+
+#+begin_src emacs-lisp :results none
+(unless (package-installed-p 'dired+)
+    (package-install 'dired+))
+(require 'dired+)
+(add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-g") 'ack)))
+#+end_src
+
 ** Projectile
 
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to
@@ -200,7 +228,59 @@ find (but for performance sake an indexing mechanism backed by external commands
 (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
 #+end_src
 
+** Recentf mode
+
+As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows
+recently opened files in the buffer list for fast switching to them.
+
+#+begin_src emacs-lisp :results none
+(use-package recentf
+  :ensure t
+  :defer t
+  :bind ("C-x C-r" . helm-recentf)
+  :config
+  (recentf-mode t)
+  (setq recentf-max-saved-items 200)
+  (setq recentf-auto-cleanup 'never
+        recentf-exclude '("[/\\]\\.elpa/"
+                          "[/\\]\\.ido\\.last\\'"
+                          "[/\\]\\.git/" ".*\\.gz\\'"
+                          ".*-autoloads\\.el\\'"
+                          "[/\\]archive-contents\\'"
+                          "[/\\]\\.loaddefs\\.el\\'"
+                          "url/cookies")
+        recentf-save-file (expand-file-name ".recentf" tmp-local-dir)
+        ;; save 100 most recent files
+        recentf-max-saved-items 100))
+#+end_src
+
+** Neotree
+
+Sometimes I need to see the directory structure for the current file. The
+[[http://www.emacswiki.org/emacs/NeoTree][NeoTree]] plugin helps here with a togglable pane that will pop up and
+disappear with the =F8= key.
+
+#+begin_src emacs-lisp :results none
+(use-package neotree
+  :ensure t
+  :defer t
+  :bind
+  ([f3] . neotree-toggle))
+#+end_src
+
 * Development
+
+** Syntax highlighting and linting
+
+Syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
+
+#+begin_src emacs-lisp
+(use-package flycheck
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
+#+end_src
 
 ** Magit
 
@@ -214,3 +294,130 @@ access magit.
 
 (global-set-key (kbd "<f9>") 'magit-status)
 #+end_src
+
+** Docker
+
+#+begin_src emacs-lisp
+(use-package docker
+  :ensure t
+  :defer t
+  :diminish)
+
+(use-package dockerfile-mode
+  :ensure t
+  :defer t)
+#+end_src
+
+** Ruby
+
+#+begin_src emacs-lisp
+;; ruby-mode
+(use-package ruby-mode
+  :ensure t
+  :defer t
+  :config
+  (setq ruby-insert-encoding-magic-comment nil))
+
+;; RVM
+(use-package rvm
+  :ensure t
+  :defer t
+  :init
+  (rvm-use-default)
+  (rvm-autodetect-ruby))
+
+;; rspec
+(use-package rspec-mode
+  :ensure t
+  :defer t
+  :config
+  (setq compilation-scroll-output 'first-error
+        rspec-use-rake-when-possible nil
+        rspec-use-bundler-when-possible t
+        rspec-use-rvm-when-possible t))
+
+;; rubocop
+; (use-package rubocop
+;  :ensure t
+;  :defer t)
+
+;; Line numbers
+(defun my-ruby-mode-hook ()
+  (linum-mode 1))
+(add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
+
+;; inf-ruby
+(unless (package-installed-p 'inf-ruby)
+  (package-install 'inf-ruby))
+
+;; Robe
+(use-package robe
+  :ensure t
+  :init
+  (add-hook 'ruby-mode-hook 'robe-mode)
+  :config
+  (eval-after-load 'company
+    '(push 'company-robe company-backends)))
+#+end_src
+
+** Python
+
+Integrates with IPython.
+
+#+begin_src emacs-lisp
+(use-package python-mode
+  :ensure t
+  :defer t)
+#+end_src
+
+** Clojure
+
+#+begin_src emacs-lisp
+(use-package clojure-mode
+  :defer t
+  :ensure t)
+#+end_src
+
+** SML
+
+#+begin_src emacs-lisp
+(use-package sml-mode
+  :ensure t
+  :defer t)
+#+end_src
+
+** Emmet
+
+According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
+
+#+begin_src emacs-lisp
+(use-package emmet-mode
+  :ensure t
+  :defer t
+  :commands emmet-mode
+  :config
+  (add-hook 'html-mode-hook 'emmet-mode)
+  (add-hook 'css-mode-hook 'emmet-mode))
+#+end_src
+
+** Markdown mode
+
+#+begin_src emacs-lisp
+(use-package markdown-mode
+  :ensure t
+  :defer t
+  :mode (("\\.markdown\\'" . markdown-mode)
+         ("\\.md\\'"       . markdown-mode)))
+#+end_src
+
+** YAML
+
+Add a major mode for yaml highlighting
+
+#+begin_src emacs-lisp
+(use-package yaml-mode
+  :ensure t
+  :defer t
+  :diminish)
+#+end_src
+
