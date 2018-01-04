@@ -164,6 +164,33 @@ We can also define some keybindings to increase and decrease the font size:
 
 * Editor augmentation
 
+** Ace jump
+
+#+begin_src emacs-lisp :results none
+(unless (package-installed-p 'ace-jump-mode)
+  (package-install 'ace-jump-mode))
+(require 'ace-jump-mode)
+
+(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;; enable a more powerful jump back function from ace jump mode
+(autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
+(eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))
+
+;; Ace jump Zap
+(unless (package-installed-p 'ace-jump-zap)
+  (package-install 'ace-jump-zap))
+(define-key global-map (kbd "M-z") 'ace-jump-zap-to-char)
+(define-key global-map (kbd "M-Z") 'ace-jump-zap-up-to-char)
+
+;; Ace window
+(unless (package-installed-p 'ace-window)
+  (package-install 'ace-window))
+(global-set-key (kbd "C-x o") 'ace-window)
+#+end_src
+
 ** Helm
 
 #+begin_src emacs-lisp :results none
