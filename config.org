@@ -244,8 +244,10 @@ For instance - finding project files has a portable implementation written in pu
 find (but for performance sake an indexing mechanism backed by external commands exists as well).
 
 #+begin_src emacs-lisp :results none
-(unless (package-installed-p 'projectile)
-  (package-install 'projectile))
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
 
 ; Helm - projectile
 (unless (package-installed-p 'helm-projectile)
