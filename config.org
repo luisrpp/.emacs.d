@@ -387,16 +387,6 @@ access magit.
     '(push 'company-robe company-backends)))
 #+end_src
 
-** Python
-
-Integrates with IPython.
-
-#+begin_src emacs-lisp
-(use-package python-mode
-  :ensure t
-  :defer t)
-#+end_src
-
 ** Clojure
 
 #+begin_src emacs-lisp
