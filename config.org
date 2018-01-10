@@ -47,6 +47,15 @@ We can also define some keybindings to increase and decrease the font size:
 ;; C-x C-0 restores the default font size
 #+end_src
 
+** Powerline
+
+#+begin_src emacs-lisp :results none
+(use-package powerline
+  :ensure t
+  :init
+  (powerline-center-theme))
+#+end_src
+
 * Sane defaults
 
 #+begin_src emacs-lisp
@@ -275,16 +284,6 @@ recently opened files in the buffer list for fast switching to them.
         recentf-save-file (expand-file-name ".recentf" tmp-local-dir)
         ;; save 100 most recent files
         recentf-max-saved-items 100))
-#+end_src
-
-** Powerline
-
-#+begin_src emacs-lisp :results none
-(use-package powerline
-  :ensure t
-  :init
-  (powerline-center-theme)
-  (setq powerline-default-separator 'wave))
 #+end_src
 
 ** Neotree
