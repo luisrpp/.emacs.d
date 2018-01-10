@@ -23,24 +23,6 @@ customize settings in [[file:init.el][init.el]].
 
 ** Themes
 
-*** Solarized theme
-
-#+begin_src emacs-lisp
-(unless (package-installed-p 'color-theme-solarized)
-  (package-install 'color-theme-solarized))
-
-(defun use-solarized-bgmode (frame mode)
-  (set-frame-parameter frame 'background-mode mode)
-    (when (not (display-graphic-p frame))
-      (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
-(enable-theme 'solarized))
-
-; (load-theme 'solarized t)
-;    (use-solarized-bgmode nil 'dark)
-;    (add-hook 'after-make-frame-functions
-; (lambda (frame) (use-solarized-bgmode frame 'dark)))
-#+end_src
-
 *** Monokai theme
 
 #+begin_src emacs-lisp
@@ -54,9 +36,7 @@ customize settings in [[file:init.el][init.el]].
 ** Font
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Bitstream Vera Sans Mono-12"))
-; (add-to-list 'default-frame-alist '(font . "Source Code Pro-12"))
-; (add-to-list 'default-frame-alist '(font . "Office Code Pro-12"))
+(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
@@ -103,7 +83,7 @@ We can also define some keybindings to increase and decrease the font size:
 (setq visible-bell t)
 
 ;; Turn off the blinking cursor
-; (blink-cursor-mode -1)
+(blink-cursor-mode -1)
 
 ;; Highlight line
 (global-hl-line-mode)
@@ -230,9 +210,11 @@ sudo pacman -S the_silver_searcher
 ** Dired+
 
 #+begin_src emacs-lisp :results none
-(unless (package-installed-p 'dired+)
-    (package-install 'dired+))
-(require 'dired+)
+(use-package dired+
+  :ensure t
+  :config
+  (require 'dired+))
+
 (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-g") 'ack)))
 #+end_src
 
@@ -255,6 +237,18 @@ find (but for performance sake an indexing mechanism backed by external commands
 
 (require 'helm-projectile)
 (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
+#+end_src
+
+** Autocomplete
+
+#+begin_src emacs-lisp :results none
+(use-package company
+  :ensure t
+  :init
+  (use-package helm-company
+    :ensure t))
+
+(add-hook 'after-init-hook 'global-company-mode)
 #+end_src
 
 ** Recentf mode
@@ -281,6 +275,16 @@ recently opened files in the buffer list for fast switching to them.
         recentf-save-file (expand-file-name ".recentf" tmp-local-dir)
         ;; save 100 most recent files
         recentf-max-saved-items 100))
+#+end_src
+
+** Powerline
+
+#+begin_src emacs-lisp :results none
+(use-package powerline
+  :ensure t
+  :init
+  (powerline-center-theme)
+  (setq powerline-default-separator 'wave))
 #+end_src
 
 ** Neotree
@@ -389,6 +393,14 @@ access magit.
     '(push 'company-robe company-backends)))
 #+end_src
 
+** Go
+
+#+begin_src emacs-lisp
+(use-package go-mode
+  :defer t
+  :ensure t)
+#+end_src
+
 ** Clojure
 
 #+begin_src emacs-lisp
@@ -439,4 +451,3 @@ Add a major mode for yaml highlighting
   :defer t
   :diminish)
 #+end_src
-
