@@ -8,7 +8,6 @@
       user-mail-address "luisrpp@gmail.com")
 #+end_src
 
-
 * Customize settings
 
 Set up the customize file to its own separate file, instead of saving
@@ -23,14 +22,24 @@ customize settings in [[file:init.el][init.el]].
 
 ** Themes
 
-*** Monokai theme
+*** Atom one dark theme
 
 #+begin_src emacs-lisp
-(use-package monokai-theme
+(use-package atom-one-dark-theme
   :if (window-system)
   :ensure t
   :init
-  (load-theme 'monokai))
+  (load-theme 'atom-one-dark t))
+#+end_src
+
+*** Monokai theme
+
+#+begin_src emacs-lisp
+; (use-package monokai-theme
+;  :if (window-system)
+;  :ensure t
+;  :init
+;  (load-theme 'monokai t))
 #+end_src
 
 ** Font
