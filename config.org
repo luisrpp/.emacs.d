@@ -59,10 +59,10 @@ We can also define some keybindings to increase and decrease the font size:
 ** Powerline
 
 #+begin_src emacs-lisp :results none
-(use-package powerline
-  :ensure t
-  :init
-  (powerline-center-theme))
+; (use-package powerline
+;   :ensure t
+;   :init
+;   (powerline-center-theme))
 #+end_src
 
 * Sane defaults
