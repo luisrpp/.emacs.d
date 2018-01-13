@@ -158,6 +158,13 @@ We can also define some keybindings to increase and decrease the font size:
 ;; Display pictures and other compressed files
 (setq auto-image-file-mode t)
 (setq auto-compression-mode t)
+
+;; Exec path from shell
+(use-package exec-path-from-shell
+  :ensure t)
+
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 #+end_src
 
 * Editor augmentation
@@ -407,6 +414,8 @@ access magit.
 (use-package go-mode
   :defer t
   :ensure t)
+
+(exec-path-from-shell-copy-env "GOPATH")
 #+end_src
 
 ** Clojure
