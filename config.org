@@ -426,6 +426,7 @@ access magit.
 (add-hook 'go-mode-hook
   (lambda ()
     (add-hook 'before-save-hook 'gofmt-before-save)
+    (setq gofmt-command "goimports")
     (setq tab-width 4)
     (setq indent-tabs-mode 1)))
 #+end_src
