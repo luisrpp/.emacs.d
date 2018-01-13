@@ -97,6 +97,12 @@ We can also define some keybindings to increase and decrease the font size:
 (global-set-key (kbd "C-o") 'my-append-line)
 (global-set-key (kbd "C-S-o") 'my-prepend-line)
 
+;; Use spaces instead of tabs
+(setq-default indent-tabs-mode nil)
+
+;; Two spaces is a tab
+(setq tab-width 2)
+
 ;; Don't beep at me
 (setq visible-bell t)
 
