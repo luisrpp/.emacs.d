@@ -329,11 +329,11 @@ disappear with the =F3= key.
 Syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
 
 #+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
+;; (use-package flycheck
+;;   :ensure t
+;;   :defer t
+;;   :init
+;;   (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
 #+end_src
 
 ** Magit
