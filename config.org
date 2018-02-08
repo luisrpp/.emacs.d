@@ -228,8 +228,6 @@ We can also define some keybindings to increase and decrease the font size:
   :commands ag
   :ensure t)
 
-(global-set-key (kbd "C-c l") 'helm-projectile-ag)
-
 (use-package helm-ag
   :defer 10
   :ensure t)
@@ -272,6 +270,7 @@ find (but for performance sake an indexing mechanism backed by external commands
 
 (require 'helm-projectile)
 (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
+(global-set-key (kbd "C-c l") 'helm-projectile-ag)
 #+end_src
 
 ** Autocomplete
