@@ -243,12 +243,12 @@ sudo pacman -S the_silver_searcher
 ** Dired+
 
 #+begin_src emacs-lisp :results none
-(use-package dired+
-  :ensure t
-  :config
-  (require 'dired+))
+; (use-package dired+
+;  :ensure t
+;  :config
+;  (require 'dired+))
 
-(add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-g") 'ack)))
+; (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-g") 'ack)))
 #+end_src
 
 ** Projectile
