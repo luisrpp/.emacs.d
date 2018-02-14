@@ -269,7 +269,7 @@ find (but for performance sake an indexing mechanism backed by external commands
   (package-install 'helm-projectile))
 
 (require 'helm-projectile)
-(global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
+(global-set-key (kbd "C-c f") 'helm-projectile-find-file)
 (global-set-key (kbd "C-c l") 'helm-projectile-ag)
 #+end_src
 
