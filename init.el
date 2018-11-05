@@ -1,11 +1,9 @@
 ;;; init.el --- Luis Roberto P. Paula's Emacs init file.
+
 ;;; Commentary:
 ;;  This is my configuration for Emacs.  The configuration depends on Org mode.
 ;;  init.el sets up a few initial GUI settings, bootstraps use-package, and loads
 ;;  config.org, which is where the majority of the configuration magic happens.
-
-;;; Code:
-(setq gc-cons-threshold 400000000)
 
 ;;; Begin initialization
 ;; Turn off mouse interface early in startup to avoid momentary display
@@ -17,16 +15,17 @@
 
 (toggle-frame-maximized)
 
-(setq inhibit-startup-message t)
-(setq initial-scratch-message "")
+; (setq inhibit-startup-message t)
+; (setq initial-scratch-message "")
 
 ;;; Set up package
 (require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-(setq package-enable-at-startup nil)
-(package-initialize)
+(when (>= emacs-major-version 24)
+  (package-initialize)
+  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+  (when (not package-archive-contents) (package-refresh-contents)))
 
 ;;; Bootstrap use-package
 ;; Install use-package if it's not already installed.

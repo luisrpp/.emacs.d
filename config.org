@@ -22,24 +22,29 @@ customize settings in [[file:init.el][init.el]].
 
 ** Themes
 
-*** Atom one dark theme
+*** doom-themes
 
 #+begin_src emacs-lisp
-(use-package atom-one-dark-theme
-  :if (window-system)
-  :ensure t
-  :init
-  (load-theme 'atom-one-dark t))
-#+end_src
+(use-package all-the-icons
+  :ensure t)
 
-*** Monokai theme
+(use-package doom-themes
+  :ensure t)
 
-#+begin_src emacs-lisp
-; (use-package monokai-theme
-;  :if (window-system)
-;  :ensure t
-;  :init
-;  (load-theme 'monokai t))
+;; Global settings (defaults)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+(load-theme 'doom-one t)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+
+;; Enable custom neotree theme (all-the-icons must be installed!)
+(doom-themes-neotree-config)
+
+;; Corrects (and improves) org-mode's native fontification
+(doom-themes-org-config)
 #+end_src
 
 ** Font
@@ -54,15 +59,6 @@ We can also define some keybindings to increase and decrease the font size:
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 ;; C-x C-0 restores the default font size
-#+end_src
-
-** Powerline
-
-#+begin_src emacs-lisp :results none
-; (use-package powerline
-;   :ensure t
-;   :init
-;   (powerline-center-theme))
 #+end_src
 
 * Sane defaults
@@ -132,7 +128,7 @@ We can also define some keybindings to increase and decrease the font size:
     (setq fci-rule-width 3)))
 
 ;; Rectangle selection
-(global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
+; (global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
 
 ;; Allows one to see matching pairs of parentheses and other characters
 (show-paren-mode t)
@@ -177,24 +173,16 @@ We can also define some keybindings to increase and decrease the font size:
 
 ** Ace jump
 
-#+begin_src emacs-lisp :results none
-(unless (package-installed-p 'ace-jump-mode)
-  (package-install 'ace-jump-mode))
-(require 'ace-jump-mode)
-
-(autoload 'ace-jump-mode "ace-jump-mode" "Emacs quick move minor mode" t)
-(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-
-;; enable a more powerful jump back function from ace jump mode
-(autoload 'ace-jump-mode-pop-mark "ace-jump-mode" "Ace jump back:-)" t)
-(eval-after-load "ace-jump-mode" '(ace-jump-mode-enable-mark-sync))
+#+begin_src emacs-lisp
+(use-package ace-jump-mode
+  :ensure t
+  :bind ("C-c SPC" . ace-jump-mode))
 
 ;; Ace jump Zap
-(unless (package-installed-p 'ace-jump-zap)
-  (package-install 'ace-jump-zap))
-(define-key global-map (kbd "M-z") 'ace-jump-zap-to-char)
-(define-key global-map (kbd "M-Z") 'ace-jump-zap-up-to-char)
+(use-package ace-jump-zap
+  :ensure t
+  :bind (("M-z" . ace-jump-zap-to-char)
+         ("M-Z" . ace-jump-zap-up-to-char)))
 
 ;; Ace window
 (unless (package-installed-p 'ace-window)
@@ -206,49 +194,13 @@ We can also define some keybindings to increase and decrease the font size:
 
 ** Helm
 
-#+begin_src emacs-lisp :results none
-(unless (package-installed-p 'helm)
-  (package-install 'helm))
-
-(require 'helm-config)
-(helm-mode t)
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-
-(define-key helm-find-files-map (kbd "<tab>") 'helm-execute-persistent-action)
-#+end_src
-
-** Ag
-
 #+begin_src emacs-lisp
-(use-package ag
-  :commands ag
-  :ensure t)
-
-(use-package helm-ag
-  :defer 10
-  :ensure t)
-#+end_src
-
-You will need to install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
-Here is how to install it on Arch Linux:
-
-#+begin_src sh :tangle no
-sudo pacman -S the_silver_searcher
-#+end_src
-
-** Dired+
-
-#+begin_src emacs-lisp :results none
-; (use-package dired+
-;  :ensure t
-;  :config
-;  (require 'dired+))
-
-; (add-hook 'dired-mode-hook (lambda () (define-key dired-mode-map (kbd "M-g") 'ack)))
+(use-package helm
+  :ensure t
+  :init (setq helm-command-prefix-key "C-c h")
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-buffers-list)))
 #+end_src
 
 ** Projectile
@@ -258,19 +210,22 @@ provide a nice set of features operating on a project level without introducing 
 For instance - finding project files has a portable implementation written in pure Emacs Lisp without the use of GNU
 find (but for performance sake an indexing mechanism backed by external commands exists as well).
 
-#+begin_src emacs-lisp :results none
+#+begin_src emacs-lisp
 (use-package projectile
   :ensure t
   :config
   (projectile-global-mode))
 
-; Helm - projectile
-(unless (package-installed-p 'helm-projectile)
-  (package-install 'helm-projectile))
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-(require 'helm-projectile)
-(global-set-key (kbd "C-c f") 'helm-projectile-find-file)
-(global-set-key (kbd "C-c l") 'helm-projectile-ag)
+(use-package helm-projectile
+  :ensure t)
+
+(use-package helm-projectile
+  :ensure t
+  :bind (("C-c C-f" . helm-projectile-find-file)))
 #+end_src
 
 ** Autocomplete
@@ -285,30 +240,16 @@ find (but for performance sake an indexing mechanism backed by external commands
 (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
 
-** Recentf mode
+** Flycheck
 
-As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows
-recently opened files in the buffer list for fast switching to them.
-
-#+begin_src emacs-lisp :results none
-(use-package recentf
+#+begin_src emacs-lisp
+(use-package flycheck
   :ensure t
-  :defer t
-  :bind ("C-x C-r" . helm-recentf)
+  :init (global-flycheck-mode)
   :config
-  (recentf-mode t)
-  (setq recentf-max-saved-items 200)
-  (setq recentf-auto-cleanup 'never
-        recentf-exclude '("[/\\]\\.elpa/"
-                          "[/\\]\\.ido\\.last\\'"
-                          "[/\\]\\.git/" ".*\\.gz\\'"
-                          ".*-autoloads\\.el\\'"
-                          "[/\\]archive-contents\\'"
-                          "[/\\]\\.loaddefs\\.el\\'"
-                          "url/cookies")
-        recentf-save-file (expand-file-name ".recentf" tmp-local-dir)
-        ;; save 100 most recent files
-        recentf-max-saved-items 100))
+  (add-hook 'text-mode-hook #'flycheck-mode)
+  (add-hook 'org-mode-hook #'flycheck-mode)
+  (define-key flycheck-mode-map (kbd "s-;") 'flycheck-previous-error))
 #+end_src
 
 ** Neotree
@@ -325,19 +266,51 @@ disappear with the =F3= key.
   ([f3] . neotree-toggle))
 #+end_src
 
-* Development
-
-** Syntax highlighting and linting
-
-Syntax highlighting and linting when programming. See https://github.com/flycheck/flycheck
+** Terminal
 
 #+begin_src emacs-lisp
-;; (use-package flycheck
-;;   :ensure t
-;;   :defer t
-;;   :init
-;;   (add-hook 'prog-mode-hook (lambda () (flycheck-mode))))
+(use-package shell-pop
+  :ensure t
+  :defer t
+  :bind (("C-t" . shell-pop))
+  :config
+  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+  (setq shell-pop-term-shell "/bin/zsh")
+  (setq shell-pop-window-size 20)
+  (setq shell-pop-full-span t)
+  (setq shell-pop-window-position "bottom")
+  ;; need to do this manually or not picked up by `shell-pop'
+  (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 #+end_src
+
+** discover-my-major
+
+#+begin_src emacs-lisp
+(use-package discover-my-major
+  :ensure t
+  :bind (("C-h C-m" . discover-my-major)))
+#+end_src
+
+** which-key
+
+#+begin_src emacs-lisp
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+#+end_src
+
+** Visible bookmarks in buffer
+
+#+begin_src emacs-lisp
+(use-package bm
+  :ensure t
+  :bind (("<C-f2>" . bm-toggle)
+         ("<f2>"   . bm-next)
+         ("<S-f2>" . bm-previous)))
+#+end_src
+
+* Development
 
 ** Magit
 
@@ -346,10 +319,9 @@ than the git interface on the command line. Use an easy keybinding to
 access magit.
 
 #+begin_src emacs-lisp
-(unless (package-installed-p 'magit)
-  (package-install 'magit))
-
-(global-set-key (kbd "<f9>") 'magit-status)
+(use-package magit
+  :ensure t
+  :bind ("<f9>" . magit-status))
 #+end_src
 
 ** Docker
@@ -375,33 +347,12 @@ access magit.
   :config
   (setq ruby-insert-encoding-magic-comment nil))
 
-;; RVM
-(use-package rvm
+;; ruby-eletric-mode
+(use-package ruby-electric
   :ensure t
-  :defer t
   :init
-  (rvm-use-default)
-  (rvm-autodetect-ruby))
-
-;; rspec
-(use-package rspec-mode
-  :ensure t
-  :defer t
-  :config
-  (setq compilation-scroll-output 'first-error
-        rspec-use-rake-when-possible nil
-        rspec-use-bundler-when-possible t
-        rspec-use-rvm-when-possible t))
-
-;; rubocop
-; (use-package rubocop
-;  :ensure t
-;  :defer t)
-
-;; Line numbers
-(defun my-ruby-mode-hook ()
-  (linum-mode 1))
-(add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
+  ;; Autoclose paired syntax elements like parens, quotes, etc
+  (add-hook 'ruby-mode-hook 'ruby-electric-mode))
 
 ;; inf-ruby
 (use-package inf-ruby
@@ -419,6 +370,17 @@ access magit.
   :config
   (eval-after-load 'company
     '(push 'company-robe company-backends)))
+
+;; RVM
+(use-package rvm
+  :ensure t
+  :defer t
+  :init
+  (rvm-use-default)
+  (rvm-autodetect-ruby))
+
+(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+  (rvm-activate-corresponding-ruby))
 #+end_src
 
 ** Go
@@ -427,15 +389,6 @@ access magit.
 (use-package go-mode
   :defer t
   :ensure t)
-
-(exec-path-from-shell-copy-env "GOPATH")
-
-(add-hook 'go-mode-hook
-  (lambda ()
-    (add-hook 'before-save-hook 'gofmt-before-save)
-    (setq gofmt-command "goimports")
-    (setq tab-width 4)
-    (setq indent-tabs-mode 1)))
 #+end_src
 
 ** Clojure
@@ -454,28 +407,11 @@ access magit.
   :defer t)
 #+end_src
 
-** Emmet
-
-According to [[http://emmet.io/][their website]], "Emmet — the essential toolkit for web-developers."
-
-#+begin_src emacs-lisp
-(use-package emmet-mode
-  :ensure t
-  :defer t
-  :commands emmet-mode
-  :config
-  (add-hook 'html-mode-hook 'emmet-mode)
-  (add-hook 'css-mode-hook 'emmet-mode))
-#+end_src
-
 ** Markdown mode
 
 #+begin_src emacs-lisp
-(use-package markdown-mode
-  :ensure t
-  :defer t
-  :mode (("\\.markdown\\'" . markdown-mode)
-         ("\\.md\\'"       . markdown-mode)))
+(use-package markdown-mode+
+  :ensure t)
 #+end_src
 
 ** YAML
