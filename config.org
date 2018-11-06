@@ -381,6 +381,18 @@ access magit.
 
 (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
   (rvm-activate-corresponding-ruby))
+
+;; rspec
+(use-package rspec-mode
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  :config
+  (setq compilation-scroll-output 'first-error
+        rspec-use-rake-when-possible nil
+        rspec-use-bundler-when-possible t
+        rspec-use-rvm-when-possible t))
 #+end_src
 
 ** Go
