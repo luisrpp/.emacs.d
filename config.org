@@ -371,17 +371,6 @@ access magit.
   (eval-after-load 'company
     '(push 'company-robe company-backends)))
 
-;; RVM
-; (use-package rvm
-;   :ensure t
-;   :defer t
-;   :init
-;   (rvm-use-default)
-;   (rvm-autodetect-ruby))
-
-; (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-;  (rvm-activate-corresponding-ruby))
-
 ;; RBENV
 (use-package rbenv
   :ensure t
