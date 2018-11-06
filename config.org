@@ -372,15 +372,28 @@ access magit.
     '(push 'company-robe company-backends)))
 
 ;; RVM
-(use-package rvm
+; (use-package rvm
+;   :ensure t
+;   :defer t
+;   :init
+;   (rvm-use-default)
+;   (rvm-autodetect-ruby))
+
+; (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+;  (rvm-activate-corresponding-ruby))
+
+;; RBENV
+(use-package rbenv
   :ensure t
   :defer t
   :init
-  (rvm-use-default)
-  (rvm-autodetect-ruby))
-
-(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-  (rvm-activate-corresponding-ruby))
+    (progn
+      (setq rbenv-show-active-ruby-in-modeline nil)
+      (global-rbenv-mode))
+  :config
+    (progn
+      (global-rbenv-mode)
+      (add-hook 'ruby-mode-hook 'rbenv-use-corresponding)))
 
 ;; rspec
 (use-package rspec-mode
