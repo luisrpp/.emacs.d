@@ -240,32 +240,6 @@ find (but for performance sake an indexing mechanism backed by external commands
 (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
 
-** Recentf
-
-As well as using Projectile for browsing projects, [[https://www.emacswiki.org/emacs/RecentFiles][recentf]] shows
-recently opened files in the buffer list for fast switching to them.
-
-#+begin_src emacs-lisp :results none
-(use-package recentf
-  :ensure t
-  :defer t
-  :bind ("C-x C-r" . helm-recentf)
-  :config
-  (recentf-mode t)
-  (setq recentf-max-saved-items 200)
-  (setq recentf-auto-cleanup 'never
-        recentf-exclude '("[/\\]\\.elpa/"
-                          "[/\\]\\.ido\\.last\\'"
-                          "[/\\]\\.git/" ".*\\.gz\\'"
-                          ".*-autoloads\\.el\\'"
-                          "[/\\]archive-contents\\'"
-                          "[/\\]\\.loaddefs\\.el\\'"
-                          "url/cookies")
-        recentf-save-file (expand-file-name ".recentf" tmp-local-dir)
-        ;; save 100 most recent files
-        recentf-max-saved-items 100))
-#+end_src
-
 ** Flycheck
 
 #+begin_src emacs-lisp
