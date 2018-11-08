@@ -366,7 +366,7 @@ access magit.
         enh-ruby-deep-indent-paren nil
         enh-ruby-bounce-deep-indent t
         enh-ruby-hanging-indent-level 2)
-  (setq enh-ruby-program "/home/luisrpp/.rbenv/versions/2.5.3/bin/ruby")
+  (setq enh-ruby-program "~/.rbenv/versions/2.5.3/bin/ruby")
   (setq ruby-insert-encoding-magic-comment nil)))
 
 ;; ruby-eletric-mode
