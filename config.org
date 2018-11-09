@@ -61,6 +61,21 @@ We can also define some keybindings to increase and decrease the font size:
 ;; C-x C-0 restores the default font size
 #+end_src
 
+** Spaceline
+
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+      (setq spaceline-buffer-encoding-abbrev-p nil)
+      (setq spaceline-line-column-p nil)
+      (setq spaceline-line-p nil)
+      (setq powerline-default-separator (quote arrow))
+      (spaceline-spacemacs-theme))
+
+  (setq powerline-default-separator nil)
+#+END_SRC
 * Sane defaults
 
 #+begin_src emacs-lisp
