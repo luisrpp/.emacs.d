@@ -177,6 +177,12 @@ We can also define some keybindings to increase and decrease the font size:
                             (projects . 5)
                             (agenda . 5)
                             (registers . 5))))
+
+  ;; Kill all buffers
+  (defun kill-all-buffers ()
+    (interactive)
+    (mapc 'kill-buffer (buffer-list)))
+  (global-set-key (kbd "C-M-s-k") 'kill-all-buffers)
 #+end_src
 
 * Editor augmentation
