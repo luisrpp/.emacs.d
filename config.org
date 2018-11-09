@@ -64,119 +64,119 @@ We can also define some keybindings to increase and decrease the font size:
 * Sane defaults
 
 #+begin_src emacs-lisp
-;; Functions
-(defun my-prepend-line (&optional arg)
-  (interactive "P")
-  (move-beginning-of-line arg)
-  (open-line 1))
+  ;; Functions
+  (defun my-prepend-line (&optional arg)
+    (interactive "P")
+    (move-beginning-of-line arg)
+    (open-line 1))
 
-(defun my-append-line (&optional arg)
-  (interactive "P")
-  (move-end-of-line arg)
-  (open-line 1)
-  (forward-line 1))
+  (defun my-append-line (&optional arg)
+    (interactive "P")
+    (move-end-of-line arg)
+    (open-line 1)
+    (forward-line 1))
 
-;; UTF-8 please
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(setq-default indent-tabs-mode nil)
+  ;; UTF-8 please
+  (setq locale-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (setq-default indent-tabs-mode nil)
 
-;; Kill whole line
-(setq kill-whole-line t)
-(global-set-key (kbd "C-k") 'kill-whole-line)
-(global-set-key (kbd "C-M-k") 'kill-line)
+  ;; Kill whole line
+  (setq kill-whole-line t)
+  (global-set-key (kbd "C-k") 'kill-whole-line)
+  (global-set-key (kbd "C-M-k") 'kill-line)
 
-;; Append & prepend
-(global-set-key (kbd "C-o") 'my-append-line)
-(global-set-key (kbd "C-S-o") 'my-prepend-line)
+  ;; Append & prepend
+  (global-set-key (kbd "C-o") 'my-append-line)
+  (global-set-key (kbd "C-S-o") 'my-prepend-line)
 
-;; Use spaces instead of tabs
-(setq-default indent-tabs-mode nil)
+  ;; Use spaces instead of tabs
+  (setq-default indent-tabs-mode nil)
 
-;; Two spaces is a tab
-(setq tab-width 2)
+  ;; Two spaces is a tab
+  (setq tab-width 2)
 
-;; Don't beep at me
-(setq visible-bell t)
+  ;; Don't beep at me
+  (setq visible-bell t)
 
-;; Turn off the blinking cursor
-(blink-cursor-mode -1)
+  ;; Turn off the blinking cursor
+  (blink-cursor-mode -1)
 
-;; Highlight line
-(global-hl-line-mode)
+  ;; Highlight line
+  (global-hl-line-mode)
 
-;; Line and column numbering
-(global-linum-mode t)
-(line-number-mode 1)
-(column-number-mode 1)
+  ;; Line and column numbering
+  (global-linum-mode t)
+  (line-number-mode 1)
+  (column-number-mode 1)
 
-;; Delete trailing whitespace automatically on save
-(add-hook 'before-save-hook
-  (lambda ()
-    (when (not (derived-mode-p 'markdown-mode))
-      (delete-trailing-whitespace))))
+  ;; Delete trailing whitespace automatically on save
+  (add-hook 'before-save-hook
+    (lambda ()
+      (when (not (derived-mode-p 'markdown-mode))
+        (delete-trailing-whitespace))))
 
-;; Fill column indicator
-(use-package fill-column-indicator
-  :ensure t
-  :config
-  (progn
-    (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
-    (setq fci-rule-width 3)))
+  ;; Fill column indicator
+  (use-package fill-column-indicator
+    :ensure t
+    :config
+    (progn
+      (add-hook 'prog-mode-hook (lambda () (fci-mode) (set-fill-column 120)))
+      (setq fci-rule-width 3)))
 
-;; Rectangle selection
-; (global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
+  ;; Rectangle selection
+  ; (global-set-key (kbd "<C-return>") 'rectangle-mark-mode)
 
-;; Allows one to see matching pairs of parentheses and other characters
-(show-paren-mode t)
+  ;; Allows one to see matching pairs of parentheses and other characters
+  (show-paren-mode t)
 
-;; Scroll smoothly
-(setq scroll-step 1)
-(setq scroll-conservatively 10)
-(setq scroll-margin 7)
-(setq scroll-conservatively 5)
+  ;; Scroll smoothly
+  (setq scroll-step 1)
+  (setq scroll-conservatively 10)
+  (setq scroll-margin 7)
+  (setq scroll-conservatively 5)
 
-;; OS Clipboard integration
-(setq x-select-enable-clipboard t)
-(setq x-select-enable-primary t)
-(setq mouse-drag-copy-region t)
+  ;; OS Clipboard integration
+  (setq x-select-enable-clipboard t)
+  (setq x-select-enable-primary t)
+  (setq mouse-drag-copy-region t)
 
-;; Stop creating “backup~” files and “#autosave#” files
-(setq make-backup-files nil)
-(setq auto-save-default nil)
+  ;; Stop creating “backup~” files and “#autosave#” files
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
 
-;; Reloading files
-(global-auto-revert-mode t)
+  ;; Reloading files
+  (global-auto-revert-mode t)
 
-;; Answering just 'y' or 'n' will do
-(defalias 'yes-or-no-p 'y-or-n-p)
+  ;; Answering just 'y' or 'n' will do
+  (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq uniquify-buffer-name-style 'post-forward)
-(setq uniquify-strip-common-suffix nil)
+  (setq uniquify-buffer-name-style 'post-forward)
+  (setq uniquify-strip-common-suffix nil)
 
-;; Display pictures and other compressed files
-(setq auto-image-file-mode t)
-(setq auto-compression-mode t)
+  ;; Display pictures and other compressed files
+  (setq auto-image-file-mode t)
+  (setq auto-compression-mode t)
 
-;; Exec path from shell
-(use-package exec-path-from-shell
-  :ensure t)
+  ;; Exec path from shell
+  (use-package exec-path-from-shell
+    :ensure t)
 
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize))
 
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
-                          (projects . 5)
-                          (agenda . 5)
-                          (registers . 5))))
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-items '((recents  . 5)
+                            (bookmarks . 5)
+                            (projects . 5)
+                            (agenda . 5)
+                            (registers . 5))))
 #+end_src
 
 * Editor augmentation
