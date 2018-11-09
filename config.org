@@ -184,33 +184,33 @@ We can also define some keybindings to increase and decrease the font size:
 ** Ace jump
 
 #+begin_src emacs-lisp
-(use-package ace-jump-mode
-  :ensure t
-  :bind ("C-c SPC" . ace-jump-mode))
+  (use-package ace-jump-mode
+    :ensure t
+    :bind ("C-c SPC" . ace-jump-mode))
 
-;; Ace jump Zap
-(use-package ace-jump-zap
-  :ensure t
-  :bind (("M-z" . ace-jump-zap-to-char)
-         ("M-Z" . ace-jump-zap-up-to-char)))
+  ;; Ace jump Zap
+  (use-package ace-jump-zap
+    :ensure t
+    :bind (("M-z" . ace-jump-zap-to-char)
+           ("M-Z" . ace-jump-zap-up-to-char)))
 
-;; Ace window
-(unless (package-installed-p 'ace-window)
-  (package-install 'ace-window))
-(global-set-key (kbd "C-x o") 'ace-window)
+  ;; Ace window
+  (unless (package-installed-p 'ace-window)
+    (package-install 'ace-window))
+  (global-set-key (kbd "C-x o") 'ace-window)
 
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 #+end_src
 
 ** Helm
 
 #+begin_src emacs-lisp
-(use-package helm
-  :ensure t
-  :init (setq helm-command-prefix-key "C-c h")
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-x b" . helm-buffers-list)))
+  (use-package helm
+    :ensure t
+    :init (setq helm-command-prefix-key "C-c h")
+    :bind (("M-x" . helm-M-x)
+           ("C-x C-f" . helm-find-files)
+           ("C-x b" . helm-buffers-list)))
 #+end_src
 
 ** Projectile
@@ -221,29 +221,29 @@ For instance - finding project files has a portable implementation written in pu
 find (but for performance sake an indexing mechanism backed by external commands exists as well).
 
 #+begin_src emacs-lisp
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-global-mode))
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-global-mode))
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-(use-package helm-projectile
-  :ensure t
-  :bind (("C-c C-f" . helm-projectile-find-file)))
+  (use-package helm-projectile
+    :ensure t
+    :bind (("C-c C-f" . helm-projectile-find-file)))
 #+end_src
 
 ** Autocomplete
 
 #+begin_src emacs-lisp :results none
-(use-package company
-  :ensure t
-  :init
-  (use-package helm-company
-    :ensure t))
+  (use-package company
+    :ensure t
+    :init
+    (use-package helm-company
+      :ensure t))
 
-(add-hook 'after-init-hook 'global-company-mode)
+  (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
 
 ** Org
@@ -264,13 +264,13 @@ Org mode configuration.
 ** Flycheck
 
 #+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode)
-  :config
-  (add-hook 'text-mode-hook #'flycheck-mode)
-  (add-hook 'org-mode-hook #'flycheck-mode)
-  (define-key flycheck-mode-map (kbd "s-;") 'flycheck-previous-error))
+  (use-package flycheck
+    :ensure t
+    :init (global-flycheck-mode)
+    :config
+    (add-hook 'text-mode-hook #'flycheck-mode)
+    (add-hook 'org-mode-hook #'flycheck-mode)
+    (define-key flycheck-mode-map (kbd "s-;") 'flycheck-previous-error))
 #+end_src
 
 ** Neotree
@@ -280,68 +280,68 @@ Sometimes I need to see the directory structure for the current file. The
 disappear with the =F3= key.
 
 #+begin_src emacs-lisp :results none
-(use-package neotree
-  :ensure t
-  :defer t
-  :bind
-  ([f3] . neotree-toggle))
+  (use-package neotree
+    :ensure t
+    :defer t
+    :bind
+    ([f3] . neotree-toggle))
 #+end_src
 
 ** Terminal
 
 #+begin_src emacs-lisp
-(defvar my-term-shell "/bin/zsh")
-(defadvice ansi-term (before force-zsh)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
-(global-set-key (kbd "<s-return>") 'ansi-term)
+  (defvar my-term-shell "/bin/zsh")
+  (defadvice ansi-term (before force-zsh)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+  (global-set-key (kbd "<s-return>") 'ansi-term)
 #+end_src
 
 ** discover-my-major
 
 #+begin_src emacs-lisp
-(use-package discover-my-major
-  :ensure t
-  :bind (("C-h C-m" . discover-my-major)))
+  (use-package discover-my-major
+    :ensure t
+    :bind (("C-h C-m" . discover-my-major)))
 #+end_src
 
 ** which-key
 
 #+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
 #+end_src
 
 ** Visible bookmarks in buffer
 
 #+begin_src emacs-lisp
-(use-package bm
-  :ensure t
-  :bind (("<C-f2>" . bm-toggle)
-         ("<f2>"   . bm-next)
-         ("<S-f2>" . bm-previous)))
+  (use-package bm
+    :ensure t
+    :bind (("<C-f2>" . bm-toggle)
+           ("<f2>"   . bm-next)
+           ("<S-f2>" . bm-previous)))
 #+end_src
 
 ** multiple-cursors
 
 #+begin_src emacs-lisp
-(use-package multiple-cursors
-  :ensure t
-  :defer t
-  :init
-  (global-set-key (kbd "C-c m c") 'mc/edit-lines))
+  (use-package multiple-cursors
+    :ensure t
+    :defer t
+    :init
+    (global-set-key (kbd "C-c m c") 'mc/edit-lines))
 #+end_src
 
 ** expand-region
 
 #+begin_src emacs-lisp
-(use-package expand-region
-  :ensure t
-  :defer t
-  :init
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  (use-package expand-region
+    :ensure t
+    :defer t
+    :init
+    (global-set-key (kbd "C-=") 'er/expand-region))
 #+end_src
 
 * Development
