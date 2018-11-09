@@ -246,6 +246,18 @@ find (but for performance sake an indexing mechanism backed by external commands
 (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
 
+** Org
+
+Org mode configuration.
+
+#+BEGIN_SRC emacs-lisp
+  ; org-bullets
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+#+END_SRC
+
 ** Flycheck
 
 #+begin_src emacs-lisp
