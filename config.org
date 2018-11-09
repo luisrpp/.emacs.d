@@ -251,6 +251,9 @@ find (but for performance sake an indexing mechanism backed by external commands
 Org mode configuration.
 
 #+BEGIN_SRC emacs-lisp
+  ; basic config
+  (setq org-src-window-setup 'current-window)
+
   ; org-bullets
   (use-package org-bullets
     :ensure t
