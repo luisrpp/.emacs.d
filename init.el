@@ -15,8 +15,7 @@
 
 (toggle-frame-maximized)
 
-; (setq inhibit-startup-message t)
-; (setq initial-scratch-message "")
+(setq inhibit-startup-screen t)
 
 ;;; Set up package
 (require 'package)

@@ -167,6 +167,11 @@ We can also define some keybindings to increase and decrease the font size:
 
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 #+end_src
 
 * Editor augmentation
