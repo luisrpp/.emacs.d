@@ -380,75 +380,75 @@ access magit.
 ** Ruby
 
 #+begin_src emacs-lisp
-;; enh-ruby-mode
-(use-package enh-ruby-mode
-  :ensure t
-  :defer t
-  :mode (("\\.rb\\'"       . enh-ruby-mode)
-         ("\\.ru\\'"       . enh-ruby-mode)
-         ("\\.gemspec\\'"  . enh-ruby-mode)
-         ("\\.rake\\'"     . enh-ruby-mode)
-         ("Rakefile\\'"    . enh-ruby-mode)
-         ("Gemfile\\'"     . enh-ruby-mode)
-         ("Guardfile\\'"   . enh-ruby-mode))
-  :config
-  (progn
-    (setq enh-ruby-indent-level 2
-          enh-ruby-add-encoding-comment-on-save nil
-          enh-ruby-deep-indent-paren nil
-          enh-ruby-bounce-deep-indent t
-          enh-ruby-hanging-indent-level 2)
-    (setq enh-ruby-program "~/.rbenv/versions/2.5.3/bin/ruby")
-    (setq ruby-insert-encoding-magic-comment nil)
-    (define-key enh-ruby-mode-map (kbd "C-c C-f") nil)))
-
-;; ruby-eletric-mode
-(use-package ruby-electric
-  :ensure t
-  :init
-  ;; Autoclose paired syntax elements like parens, quotes, etc
-  (add-hook 'enh-ruby-mode-hook 'ruby-electric-mode))
-
-;; inf-ruby
-(use-package inf-ruby
-  :ensure t
-  :init
-  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
-  (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
-  (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
-
-;; Robe
-(use-package robe
-  :ensure t
-  :init
-  (add-hook 'enh-ruby-mode-hook 'robe-mode)
-  :config
-  (eval-after-load 'company
-    '(push 'company-robe company-backends)))
-
-;; RBENV
-(use-package rbenv
-  :ensure t
-  :defer t
-  :init
+  ;; enh-ruby-mode
+  (use-package enh-ruby-mode
+    :ensure t
+    :defer t
+    :mode (("\\.rb\\'"       . enh-ruby-mode)
+           ("\\.ru\\'"       . enh-ruby-mode)
+           ("\\.gemspec\\'"  . enh-ruby-mode)
+           ("\\.rake\\'"     . enh-ruby-mode)
+           ("Rakefile\\'"    . enh-ruby-mode)
+           ("Gemfile\\'"     . enh-ruby-mode)
+           ("Guardfile\\'"   . enh-ruby-mode))
+    :config
     (progn
-      (setq rbenv-show-active-ruby-in-modeline nil)
-      (global-rbenv-mode))
-  :config
-    (progn
-      (global-rbenv-mode)
-      (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)))
+      (setq enh-ruby-indent-level 2
+            enh-ruby-add-encoding-comment-on-save nil
+            enh-ruby-deep-indent-paren nil
+            enh-ruby-bounce-deep-indent t
+            enh-ruby-hanging-indent-level 2)
+      (setq enh-ruby-program "~/.rbenv/versions/2.5.3/bin/ruby")
+      (setq ruby-insert-encoding-magic-comment nil)
+      (define-key enh-ruby-mode-map (kbd "C-c C-f") nil)))
 
-;; rspec
-(use-package rspec-mode
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
-  :config
-  (setq compilation-scroll-output 'first-error
-        rspec-use-rake-when-possible nil
-        rspec-use-bundler-when-possible t))
+  ;; ruby-eletric-mode
+  (use-package ruby-electric
+    :ensure t
+    :init
+    ;; Autoclose paired syntax elements like parens, quotes, etc
+    (add-hook 'enh-ruby-mode-hook 'ruby-electric-mode))
+
+  ;; inf-ruby
+  (use-package inf-ruby
+    :ensure t
+    :init
+    (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
+    (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+    (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
+
+  ;; Robe
+  (use-package robe
+    :ensure t
+    :init
+    (add-hook 'enh-ruby-mode-hook 'robe-mode)
+    :config
+    (eval-after-load 'company
+      '(push 'company-robe company-backends)))
+
+  ;; RBENV
+  (use-package rbenv
+    :ensure t
+    :defer t
+    :init
+      (progn
+        (setq rbenv-show-active-ruby-in-modeline nil)
+        (global-rbenv-mode))
+    :config
+      (progn
+        (global-rbenv-mode)
+        (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)))
+
+  ;; rspec
+  (use-package rspec-mode
+    :ensure t
+    :defer t
+    :init
+    (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+    :config
+    (setq compilation-scroll-output 'first-error
+          rspec-use-rake-when-possible nil
+          rspec-use-bundler-when-possible t))
 #+end_src
 
 ** Go
