@@ -270,13 +270,13 @@ Org mode configuration.
 ** Flycheck
 
 #+begin_src emacs-lisp
-  (use-package flycheck
-    :ensure t
-    :init (global-flycheck-mode)
-    :config
-    (add-hook 'text-mode-hook #'flycheck-mode)
-    (add-hook 'org-mode-hook #'flycheck-mode)
-    (define-key flycheck-mode-map (kbd "s-;") 'flycheck-previous-error))
+;  (use-package flycheck
+;    :ensure t
+;    :init (global-flycheck-mode)
+;    :config
+;    (add-hook 'text-mode-hook #'flycheck-mode)
+;    (add-hook 'org-mode-hook #'flycheck-mode)
+;    (define-key flycheck-mode-map (kbd "s-;") 'flycheck-previous-error))
 #+end_src
 
 ** Neotree
