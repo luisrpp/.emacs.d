@@ -416,7 +416,7 @@ access magit.
             enh-ruby-deep-indent-paren nil
             enh-ruby-bounce-deep-indent t
             enh-ruby-hanging-indent-level 2)
-      (setq enh-ruby-program "~/.rbenv/versions/2.5.3/bin/ruby")
+      (setq enh-ruby-program "~/.rvm/rubies/ruby-2.5.3/bin/ruby")
       (setq ruby-insert-encoding-magic-comment nil)
       (define-key enh-ruby-mode-map (kbd "C-c C-f") nil)))
 
@@ -446,19 +446,16 @@ access magit.
     (eval-after-load 'company
       '(push 'company-robe company-backends)))
 
-  ;; RBENV
-  (use-package rbenv
+  ;; RVM
+  (use-package rvm
     :ensure t
     :defer t
-    :diminish
     :init
-      (progn
-        (setq rbenv-show-active-ruby-in-modeline nil)
-        (global-rbenv-mode))
-    :config
-      (progn
-        (global-rbenv-mode)
-        (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)))
+    (rvm-use-default)
+    (rvm-autodetect-ruby))
+
+  (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+    (rvm-activate-corresponding-ruby))
 
   ;; rspec
   (use-package rspec-mode
@@ -470,7 +467,8 @@ access magit.
     :config
     (setq compilation-scroll-output 'first-error
           rspec-use-rake-when-possible nil
-          rspec-use-bundler-when-possible t))
+          rspec-use-bundler-when-possible t
+          rspec-use-rvm-when-possible t))
 #+end_src
 
 ** Go
