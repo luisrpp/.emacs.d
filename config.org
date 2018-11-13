@@ -73,6 +73,7 @@ We can also define some keybindings to increase and decrease the font size:
       (setq spaceline-line-p nil)
       (setq powerline-default-separator (quote arrow))
       (spaceline-spacemacs-theme)
+      (spaceline-helm-mode)
       (spaceline-toggle-line-column-on))
 #+END_SRC
 
