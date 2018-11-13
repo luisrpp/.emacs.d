@@ -61,6 +61,21 @@ We can also define some keybindings to increase and decrease the font size:
 ;; C-x C-0 restores the default font size
 #+end_src
 
+** Spaceline
+
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+      (setq spaceline-buffer-encoding-abbrev-p nil)
+      (setq spaceline-line-column-p nil)
+      (setq spaceline-line-p nil)
+      (setq powerline-default-separator (quote arrow))
+      (spaceline-spacemacs-theme)
+      (spaceline-toggle-line-column-on))
+#+END_SRC
+
 * Sane defaults
 
 #+begin_src emacs-lisp
@@ -245,6 +260,7 @@ find (but for performance sake an indexing mechanism backed by external commands
 #+begin_src emacs-lisp :results none
   (use-package company
     :ensure t
+    :diminish
     :init
     (use-package helm-company
       :ensure t))
@@ -316,6 +332,7 @@ disappear with the =F3= key.
 #+begin_src emacs-lisp
   (use-package which-key
     :ensure t
+    :diminish
     :config
     (which-key-mode))
 #+end_src
@@ -405,6 +422,7 @@ access magit.
   ;; ruby-eletric-mode
   (use-package ruby-electric
     :ensure t
+    :diminish
     :init
     ;; Autoclose paired syntax elements like parens, quotes, etc
     (add-hook 'enh-ruby-mode-hook 'ruby-electric-mode))
@@ -420,6 +438,7 @@ access magit.
   ;; Robe
   (use-package robe
     :ensure t
+    :diminish
     :init
     (add-hook 'enh-ruby-mode-hook 'robe-mode)
     :config
@@ -430,6 +449,7 @@ access magit.
   (use-package rbenv
     :ensure t
     :defer t
+    :diminish
     :init
       (progn
         (setq rbenv-show-active-ruby-in-modeline nil)
@@ -443,6 +463,7 @@ access magit.
   (use-package rspec-mode
     :ensure t
     :defer t
+    :diminish
     :init
     (add-hook 'after-init-hook 'inf-ruby-switch-setup)
     :config
