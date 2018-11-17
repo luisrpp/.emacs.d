@@ -4,8 +4,8 @@
 * Personal Information
 
 #+begin_src emacs-lisp
-(setq user-full-name "Luis Roberto Pereira de Paula"
-      user-mail-address "luisrpp@gmail.com")
+  (setq user-full-name "Luis Roberto Pereira de Paula"
+        user-mail-address "luisrpp@gmail.com")
 #+end_src
 
 * Customize settings
@@ -14,8 +14,8 @@ Set up the customize file to its own separate file, instead of saving
 customize settings in [[file:init.el][init.el]].
 
 #+begin_src emacs-lisp
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file) (load custom-file))
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file) (load custom-file))
 #+end_src
 
 * Appearance
@@ -25,40 +25,40 @@ customize settings in [[file:init.el][init.el]].
 *** doom-themes
 
 #+begin_src emacs-lisp
-(use-package all-the-icons
-  :ensure t)
+  (use-package all-the-icons
+    :ensure t)
 
-(use-package doom-themes
-  :ensure t)
+  (use-package doom-themes
+    :ensure t)
 
-;; Global settings (defaults)
-(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
 
-(load-theme 'doom-one t)
+  (load-theme 'doom-one t)
 
-;; Enable flashing mode-line on errors
-(doom-themes-visual-bell-config)
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
 
-;; Enable custom neotree theme (all-the-icons must be installed!)
-(doom-themes-neotree-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
 
-;; Corrects (and improves) org-mode's native fontification
-(doom-themes-org-config)
+  ;; Corrects (and improves) org-mode's native fontification
+  (doom-themes-org-config)
 #+end_src
 
 ** Font
 
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+  (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
 #+end_src
 
 We can also define some keybindings to increase and decrease the font size:
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
-;; C-x C-0 restores the default font size
+  (global-set-key (kbd "C-+") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  ;; C-x C-0 restores the default font size
 #+end_src
 
 ** Spaceline
@@ -390,6 +390,14 @@ disappear with the =F3= key.
     (global-set-key (kbd "C-=") 'er/expand-region))
 #+end_src
 
+** Mark-Multiple
+
+#+BEGIN_SRC emacs-lisp
+  (use-package mark-multiple
+    :ensure t
+    :bind ("C-c q" . 'mark-next-like-this))
+#+END_SRC
+
 * Development
 
 ** Magit
@@ -399,22 +407,22 @@ than the git interface on the command line. Use an easy keybinding to
 access magit.
 
 #+begin_src emacs-lisp
-(use-package magit
-  :ensure t
-  :bind ("<f9>" . magit-status))
+  (use-package magit
+    :ensure t
+    :bind ("<f9>" . magit-status))
 #+end_src
 
 ** Docker
 
 #+begin_src emacs-lisp
-(use-package docker
-  :ensure t
-  :defer t
-  :diminish)
+  (use-package docker
+    :ensure t
+    :defer t
+    :diminish)
 
-(use-package dockerfile-mode
-  :ensure t
-  :defer t)
+  (use-package dockerfile-mode
+    :ensure t
+    :defer t)
 #+end_src
 
 ** Ruby
@@ -496,32 +504,32 @@ access magit.
 ** Go
 
 #+begin_src emacs-lisp
-(use-package go-mode
-  :defer t
-  :ensure t)
+  (use-package go-mode
+    :defer t
+    :ensure t)
 #+end_src
 
 ** Clojure
 
 #+begin_src emacs-lisp
-(use-package clojure-mode
-  :defer t
-  :ensure t)
+  (use-package clojure-mode
+    :defer t
+    :ensure t)
 #+end_src
 
 ** SML
 
 #+begin_src emacs-lisp
-(use-package sml-mode
-  :ensure t
-  :defer t)
+  (use-package sml-mode
+    :ensure t
+    :defer t)
 #+end_src
 
 ** Markdown mode
 
 #+begin_src emacs-lisp
-(use-package markdown-mode+
-  :ensure t)
+  (use-package markdown-mode+
+    :ensure t)
 #+end_src
 
 ** YAML
@@ -529,8 +537,8 @@ access magit.
 Add a major mode for yaml highlighting
 
 #+begin_src emacs-lisp
-(use-package yaml-mode
-  :ensure t
-  :defer t
-  :diminish)
+  (use-package yaml-mode
+    :ensure t
+    :defer t
+    :diminish)
 #+end_src
