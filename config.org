@@ -256,6 +256,27 @@ find (but for performance sake an indexing mechanism backed by external commands
     :bind (("s-f" . helm-projectile-find-file)))
 #+end_src
 
+** Ag
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ag
+    :commands ag
+    :ensure t)
+
+  (use-package helm-ag
+    :defer 10
+    :ensure t)
+
+  (global-set-key (kbd "s-/") 'helm-projectile-ag)
+#+END_SRC
+
+You need to install [[https://github.com/ggreer/the_silver_searcher][The Silver Searcher]].
+Here is how to install it on Arch Linux:
+
+#+begin_src sh :tangle no
+  sudo pacman -S the_silver_searcher
+#+end_src
+
 ** Autocomplete
 
 #+begin_src emacs-lisp :results none
