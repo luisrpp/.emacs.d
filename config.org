@@ -199,6 +199,11 @@ We can also define some keybindings to increase and decrease the font size:
     (interactive)
     (mapc 'kill-buffer (buffer-list)))
   (global-set-key (kbd "C-M-s-k") 'kill-all-buffers)
+
+  ;; Lets us use asynchronous processes wherever possible, pretty useful
+  (use-package async
+    :ensure t
+    :init (dired-async-mode 1))
 #+end_src
 
 * Editor augmentation
