@@ -279,15 +279,25 @@ Here is how to install it on Arch Linux:
 
 ** Autocomplete
 
-#+begin_src emacs-lisp :results none
+#+begin_src emacs-lisp
   (use-package company
     :ensure t
     :diminish
     :init
     (use-package helm-company
-      :ensure t))
+      :ensure t)
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3))
 
   (add-hook 'after-init-hook 'global-company-mode)
+
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (define-key company-active-map (kbd "SPC") #'company-abort))
 #+end_src
 
 ** Org
