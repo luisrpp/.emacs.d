@@ -1,5 +1,6 @@
 /custom.el
 /elpa/
+/private/
 !/private/cache/autosave/.gitkeep
 !/private/cache/auto-save-list/.gitkeep
 !/private/cache/backup/.gitkeep
