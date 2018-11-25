@@ -1,5 +1,6 @@
 /.custom.el
 /elpa/
+/private/
 /projectile-bookmarks.eld
 /smex-items
 /snippets/
