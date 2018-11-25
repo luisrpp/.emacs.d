@@ -10,4 +10,4 @@
   :diminish)
 
 (provide 'lang-yaml)
-;;; lang-yaml ends here
+;;; lang-yaml.el ends here

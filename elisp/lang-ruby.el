@@ -69,4 +69,4 @@
 ;; (use-package rinari)
 
 (provide 'lang-ruby)
-;;; lang-ruby ends here
+;;; lang-ruby.el ends here

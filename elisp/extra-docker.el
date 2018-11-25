@@ -14,4 +14,4 @@
   :defer t)
 
 (provide 'extra-docker)
-;;; extra-docker ends here
+;;; extra-docker.el ends here

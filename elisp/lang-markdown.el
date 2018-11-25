@@ -8,4 +8,4 @@
   :ensure t)
 
 (provide 'lang-markdown)
-;;; lang-markdown ends here
+;;; lang-markdown.el ends here

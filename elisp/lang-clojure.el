@@ -9,4 +9,4 @@
   :ensure t)
 
 (provide 'lang-clojure)
-;;; lang-clojure ends here
+;;; lang-clojure.el ends here

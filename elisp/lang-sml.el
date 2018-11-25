@@ -9,4 +9,4 @@
   :defer t)
 
 (provide 'lang-sml)
-;;; lang-sml ends here
+;;; lang-sml.el ends here

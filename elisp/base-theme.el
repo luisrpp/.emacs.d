@@ -46,4 +46,4 @@
 ;; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
 
 (provide 'base-theme)
-;;; base-theme ends here
+;;; base-theme.el ends here

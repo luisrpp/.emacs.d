@@ -16,4 +16,4 @@
   (forward-line 1))
 
 (provide 'base-functions)
-;;; base-functions ends here
+;;; base-functions.el ends here

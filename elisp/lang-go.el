@@ -43,4 +43,4 @@
            "go build -v && go test -v && go vet")))
 
 (provide 'lang-go)
-;;; lang-go ends here
+;;; lang-go.el ends here

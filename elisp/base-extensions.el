@@ -208,4 +208,4 @@
   (dired-async-mode 1))
 
 (provide 'base-extensions)
-;;; base-extensions ends here
+;;; base-extensions.el ends here

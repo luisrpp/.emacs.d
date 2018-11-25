@@ -17,4 +17,4 @@
 (global-set-key (kbd "C-S-o") 'lrpp/prepend-line)
 
 (provide 'base-global-keys)
-;;; base-global-keys ends here
+;;; base-global-keys.el ends here
