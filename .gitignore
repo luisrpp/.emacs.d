@@ -1,10 +1,5 @@
 /.custom.el
 /elpa/
-/private/
-!/private/cache/autosave/.gitkeep
-!/private/cache/auto-save-list/.gitkeep
-!/private/cache/backup/.gitkeep
-!/private/cache/bookmarks/.gitkeep
 /projectile-bookmarks.eld
 /smex-items
 /snippets/
