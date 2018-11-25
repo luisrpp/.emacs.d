@@ -6,6 +6,9 @@
 
 ;;; Code:
 
+(setq user-full-name    "Luis Roberto Pereira de Paula"
+	  user-mail-address "luisrpp@gmail.com")
+
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
 (require 'base)
