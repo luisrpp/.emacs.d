@@ -1,55 +1,29 @@
-;;; init.el --- Luis Roberto P. Paula's Emacs init file.
+;;; init.el --- Luis Roberto P. Paula's Emacs init file
 
+;;; package --- Main init file
 ;;; Commentary:
-;;  This is my configuration for Emacs.  The configuration depends on Org mode.
-;;  init.el sets up a few initial GUI settings, bootstraps use-package, and loads
-;;  config.org, which is where the majority of the configuration magic happens.
+;;; This is my init file
 
-;;; Begin initialization
-;; Turn off mouse interface early in startup to avoid momentary display
-(when window-system
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-(tooltip-mode -1))
+;;; Code:
 
-(toggle-frame-maximized)
+(add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
-(setq inhibit-startup-screen t)
+(require 'base)
+(require 'base-theme)
+(require 'base-extensions)
+(require 'base-functions)
+(require 'base-global-keys)
 
-;;; Set up package
-(require 'package)
-(when (>= emacs-major-version 24)
-  (package-initialize)
-  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-  (when (not package-archive-contents) (package-refresh-contents)))
+;; Development
+(require 'lang-ruby)
+(require 'lang-go)
+(require 'lang-clojure)
+(require 'lang-sml)
+(require 'lang-markdown)
+(require 'lang-yaml)
 
-;;; Bootstrap use-package
-;; Install use-package if it's not already installed.
-;; use-package is used to configure the rest of the packages.
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Extras
+(require 'extra-docker)
 
-;; From use-package README
-(eval-when-compile
-  (require 'use-package))
-
-(unless (package-installed-p 'diminish)
-  (package-refresh-contents)
-  (package-install 'diminish))
-(require 'diminish)
-
-(require 'bind-key)
-
-(server-start)
-
-;;; Load the config
-(org-babel-load-file (concat user-emacs-directory "config.org"))
-
-(setq gc-cons-threshold 800000)
-
-(provide 'emacs-init)
+(provide 'init)
 ;;; init.el ends here

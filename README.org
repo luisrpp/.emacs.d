@@ -1,6 +1,0 @@
-#+TITLE: Emacs Configuration
-#+AUTHOR: Luis Roberto Pereira de Paula
-
-This is my configuration for Emacs. The configuration depends on Org mode. [[file:init.el][init.el]] sets up a
-few initial GUI settings, bootstraps [[https://github.com/jwiegley/use-package][use-package]], and loads
-[[file:config.org][config.org]], which is where the majority of the configuration magic happens.
