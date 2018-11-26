@@ -4,6 +4,7 @@
 !/private/cache/auto-save-list/.gitkeep
 !/private/cache/backup/.gitkeep
 !/private/cache/bookmarks/.gitkeep
+/private/
 /projectile-bookmarks.eld
 /smex-items
 /snippets/
