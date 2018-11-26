@@ -5,7 +5,6 @@
 ;;; Code:
 
 (use-package enh-ruby-mode
-  :ensure t
   :mode (("\\.rb\\'"       . enh-ruby-mode)
          ("\\.ru\\'"       . enh-ruby-mode)
          ("\\.gemspec\\'"  . enh-ruby-mode)
@@ -24,28 +23,24 @@
     (setq ruby-insert-encoding-magic-comment nil)))
 
 (use-package ruby-electric
-  :ensure t
   :diminish
   :init
   ;; Autoclose paired syntax elements like parens, quotes, etc
   (add-hook 'enh-ruby-mode-hook 'ruby-electric-mode))
 
 (use-package inf-ruby
-  :ensure t
   :init
   (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
   (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
   (add-hook 'compilation-filter-hook 'inf-ruby-auto-enter))
 
 (use-package robe
-  :ensure t
   :init
   (add-hook 'enh-ruby-mode-hook 'robe-mode)
   :config
   (push 'company-robe company-backends))
 
 (use-package rvm
-  :ensure t
   :defer t
   :init
   (rvm-use-default)
@@ -55,7 +50,6 @@
   (rvm-activate-corresponding-ruby))
 
 (use-package rspec-mode
-  :ensure t
   :defer t
   :diminish
   :init

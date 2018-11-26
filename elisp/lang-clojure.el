@@ -4,9 +4,7 @@
 
 ;;; Code:
 
-(use-package clojure-mode
-  :defer t
-  :ensure t)
+(use-package clojure-mode)
 
 (provide 'lang-clojure)
 ;;; lang-clojure.el ends here

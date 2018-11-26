@@ -4,14 +4,9 @@
 
 ;;; Code:
 
-(use-package docker
-  :ensure t
-  :defer t
-  :diminish)
+(use-package docker)
 
-(use-package dockerfile-mode
-  :ensure t
-  :defer t)
+(use-package dockerfile-mode)
 
 (provide 'extra-docker)
 ;;; extra-docker.el ends here

@@ -4,8 +4,7 @@
 
 ;;; Code:
 
-(use-package markdown-mode+
-  :ensure t)
+(use-package markdown-mode+)
 
 (provide 'lang-markdown)
 ;;; lang-markdown.el ends here

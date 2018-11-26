@@ -4,9 +4,7 @@
 
 ;;; Code:
 
-(use-package sml-mode
-  :ensure t
-  :defer t)
+(use-package sml-mode)
 
 (provide 'lang-sml)
 ;;; lang-sml.el ends here
