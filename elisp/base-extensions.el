@@ -48,9 +48,8 @@
   ("C-=" . er/expand-region))
 
 (use-package flycheck
-  :ensure t
-  :diminish
-  :init (global-flycheck-mode)
+  :init
+  (global-flycheck-mode)
   :config
   (add-hook 'text-mode-hook #'flycheck-mode)
   (add-hook 'org-mode-hook #'flycheck-mode)
@@ -188,16 +187,8 @@
   (("C-h C-m" . discover-my-major)))
 
 (use-package mark-multiple
-  :ensure t
   :bind
   ("C-c q" . 'mark-next-like-this))
-
-(use-package bm
-  :ensure t
-  :bind
-  (("<C-f2>" . bm-toggle)
-   ("<f2>"   . bm-next)
-   ("<S-f2>" . bm-previous)))
 
 (provide 'base-extensions)
 ;;; base-extensions ends here
