@@ -130,8 +130,8 @@
 (use-package org-projectile
   :config
   (org-projectile-per-project)
-  (setq org-projectile-per-project-filepath "todo.org"
-	org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
+  (setq org-projectile-per-project-filepath "todo.org"))
+	;     org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
 
 (use-package org-bullets
   :config
@@ -189,6 +189,12 @@
 (use-package mark-multiple
   :bind
   ("C-c q" . 'mark-next-like-this))
+
+(use-package bm
+  :bind
+  (("<C-f2>" . bm-toggle)
+   ("<f2>"   . bm-next)
+   ("<S-f2>" . bm-previous)))
 
 (provide 'base-extensions)
 ;;; base-extensions ends here

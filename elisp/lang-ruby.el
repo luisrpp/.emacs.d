@@ -60,7 +60,7 @@
         rspec-use-bundler-when-possible t
         rspec-use-rvm-when-possible t))
 
-;; (use-package rinari)
+; (use-package rinari)
 
 (provide 'lang-ruby)
 ;;; lang-ruby.el ends here
