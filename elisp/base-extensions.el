@@ -131,7 +131,7 @@
   :config
   (org-projectile-per-project)
   (setq org-projectile-per-project-filepath "todo.org"))
-	;     org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
+        ; org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
 
 (use-package org-bullets
   :config

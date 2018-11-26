@@ -14,12 +14,12 @@
   (add-hook 'go-mode-hook 'setup-go-mode-compile)
   (add-hook 'go-mode-hook #'smartparens-mode)
   (add-hook 'go-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+                             (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
   (add-hook 'go-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c C-g") 'go-goto-imports)))
+                             (local-set-key (kbd "C-c C-g") 'go-goto-imports)))
   (add-hook 'go-mode-hook (lambda ()
-			    (set (make-local-variable 'company-backends) '(company-go))
-			    (company-mode))))
+                             (set (make-local-variable 'company-backends) '(company-go))
+                             (company-mode))))
 
 (use-package company-go
   :after go-mode
