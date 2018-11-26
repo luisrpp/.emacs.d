@@ -1,16 +1,33 @@
+;;; package --- Extensions
+;;; Commentary:
+;;; Emacs extensions
+
+;;; Code:
 
 (use-package avy
   :bind
   ("C-c SPC" . avy-goto-char))
 
-
 (use-package company
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 3)
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (define-key company-active-map (kbd "SPC") #'company-abort)))
 
 (use-package dashboard
   :config
-  (dashboard-setup-startup-hook))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)
+                          (registers . 5))))
 
 (use-package ediff
   :config
@@ -30,22 +47,28 @@
   :bind
   ("C-=" . er/expand-region))
 
-(use-package flycheck)
-
+(use-package flycheck
+  :ensure t
+  :diminish
+  :init (global-flycheck-mode)
+  :config
+  (add-hook 'text-mode-hook #'flycheck-mode)
+  (add-hook 'org-mode-hook #'flycheck-mode)
+  (define-key flycheck-mode-map (kbd "s-;") 'flycheck-previous-error))
 
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
   ("C-x C-m" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
-  ("C-x c k" . counsel-yank-pop))
+  ("C-x c k" . counsel-yank-pop)
+  ("s-e" . counsel-projectile-find-file)
+  ("s-/" . counsel-ag))
 
 (use-package counsel-projectile
-  :bind
-  ("C-x v" . counsel-projectile)
-  ("C-x c p" . counsel-projectile-ag)
   :config
-  (counsel-projectile-on))
+  (counsel-projectile-mode)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package ivy
   :bind
@@ -53,9 +76,11 @@
   ("C-x C-r" . ivy-resume)
   :config
   (ivy-mode 1)
-  (setq ivy-use-virtual-buffers nil)
+  (setq ivy-use-virtual-buffers nil
+        ivy-re-builders-alist '((swipper . ivy--regex-plus)
+                                (counsel-ag . ivy--regex-plus)
+                                (t . ivy--regex-fuzzy)))
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
-
 
 (use-package hlinum
   :config
@@ -68,16 +93,14 @@
 
 (use-package magit
   :config
-  
   (setq magit-completing-read-function 'ivy-completing-read)
-  
   :bind
   ;; Magic
-  ("C-x g s" . magit-status)
+  ("<f9>" . magit-status)
   ("C-x g x" . magit-checkout)
-  ("C-x g c" . magit-commit)
-  ("C-x g p" . magit-push)
-  ("C-x g u" . magit-pull)
+  ("C-x g c" . magit-commit-create)
+  ("C-x g p" . magit-push-other)
+  ("C-x g u" . magit-pull-branch)
   ("C-x g e" . magit-ediff-resolve)
   ("C-x g r" . magit-rebase-interactive))
 
@@ -92,11 +115,10 @@
 
 (use-package neotree
   :config
-  (setq neo-theme 'arrow
-        neotree-smart-optn t
+  (setq neotree-smart-optn t
         neo-window-fixed-size nil)
-  ;; Disable linum for neotree
-  (add-hook 'neo-after-create-hook 'disable-neotree-hook))
+  :bind
+  ([f8] . neotree-toggle))
 
 (use-package org
   :config
@@ -125,9 +147,7 @@
   :config
   (setq projectile-known-projects-file
         (expand-file-name "projectile-bookmarks.eld" temp-dir))
-  
   (setq projectile-completion-system 'ivy)
-  
   (projectile-global-mode))
 
 (use-package recentf
@@ -142,9 +162,8 @@
 (use-package undo-tree
   :config
   ;; Remember undo history
-  (setq
-   undo-tree-auto-save-history nil
-   undo-tree-history-directory-alist `(("." . ,(concat temp-dir "/undo/"))))
+  (setq undo-tree-auto-save-history nil
+        undo-tree-history-directory-alist `(("." . ,(concat temp-dir "/undo/"))))
   (global-undo-tree-mode 1))
 
 (use-package which-key
@@ -164,4 +183,21 @@
   :config
   (yas-global-mode 1))
 
+(use-package discover-my-major
+  :bind
+  (("C-h C-m" . discover-my-major)))
+
+(use-package mark-multiple
+  :ensure t
+  :bind
+  ("C-c q" . 'mark-next-like-this))
+
+(use-package bm
+  :ensure t
+  :bind
+  (("<C-f2>" . bm-toggle)
+   ("<f2>"   . bm-next)
+   ("<S-f2>" . bm-previous)))
+
 (provide 'base-extensions)
+;;; base-extensions ends here
