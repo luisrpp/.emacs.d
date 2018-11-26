@@ -9,6 +9,7 @@
   ("C-c SPC" . avy-goto-char))
 
 (use-package company
+  :diminish
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0
@@ -48,6 +49,7 @@
   ("C-=" . er/expand-region))
 
 (use-package flycheck
+  :diminish
   :init
   (global-flycheck-mode)
   :config
@@ -159,6 +161,7 @@
 (use-package smex)
 
 (use-package undo-tree
+  :diminish
   :config
   ;; Remember undo history
   (setq undo-tree-auto-save-history nil
@@ -166,6 +169,7 @@
   (global-undo-tree-mode 1))
 
 (use-package which-key
+  :diminish
   :config
   (which-key-mode))
 
@@ -179,6 +183,7 @@
 (use-package wgrep)
 
 (use-package yasnippet
+  :diminish
   :config
   (yas-global-mode 1))
 
