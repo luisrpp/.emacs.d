@@ -197,4 +197,4 @@
    ("<S-f2>" . bm-previous)))
 
 (provide 'base-extensions)
-;;; base-extensions ends here
+;;; base-extensions.el ends here
