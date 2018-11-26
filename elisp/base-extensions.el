@@ -72,6 +72,7 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package ivy
+  :diminish
   :bind
   ("C-x s" . swiper)
   ("C-x C-r" . ivy-resume)
