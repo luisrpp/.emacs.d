@@ -1,7 +1,13 @@
 ;;; package --- Go language
 ;;; Commentary:
 ;;; Go language configuration
-
+;;;
+;;; REQUIREMENTS:
+;;; go get -u golang.org/x/tools/cmd/...
+;;; go get -u github.com/rogpeppe/godef
+;;; go get -u github.com/stamblerre/gocode
+;;; go get -u github.com/kisielk/errcheck
+;;;
 ;;; Code:
 
 (use-package go-mode
