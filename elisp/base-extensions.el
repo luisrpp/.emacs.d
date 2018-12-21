@@ -12,7 +12,7 @@
   :diminish
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-idle-delay 0
+  (setq company-idle-delay 0.3
         company-minimum-prefix-length 3)
   (with-eval-after-load 'company
     (define-key company-active-map (kbd "M-n") nil)
