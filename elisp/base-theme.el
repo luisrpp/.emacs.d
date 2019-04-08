@@ -41,7 +41,7 @@
     (spaceline-spacemacs-theme)
     (spaceline-helm-mode))
 
-; (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-12"))
+(add-to-list 'default-frame-alist '(font . "Monospace-12"))
 
 (provide 'base-theme)
 ;;; base-theme.el ends here
