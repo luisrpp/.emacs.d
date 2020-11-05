@@ -1,4 +1,4 @@
-;;; init-ui.el --- GUI setup -*- lexical-binding: t -*-
+;;; init-ui.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -40,10 +40,10 @@
   (after-init . default-text-scale-mode))
 
 ;; Scroll smoothly
-(setq scroll-step                        1
-      scroll-conservatively              10
-      scroll-margin                      7
-      scroll-conservatively              5)
+(setq scroll-step           1
+      scroll-conservatively 10
+      scroll-margin         7
+      scroll-conservatively 5)
 
 ;; Change default font
 (add-to-list 'default-frame-alist '(font . "Source Code Pro-16"))
