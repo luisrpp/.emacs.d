@@ -49,4 +49,9 @@
   (global-set-key (kbd "M-l") #'fix-word-downcase)
   (global-set-key (kbd "M-c") #'fix-word-capitalize))
 
+(use-package which-key
+  :diminish
+  :config
+  (which-key-mode))
+
 (provide 'init-defaults)

@@ -30,6 +30,7 @@
 
   (require 'init-defaults)
   (require 'init-look-and-fill)
+  (require 'init-ui)
   (require 'init-osx-keys)
   (require 'init-completions)
 
