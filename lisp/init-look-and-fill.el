@@ -88,11 +88,11 @@
 ;   '(mode-line ((t (:family "Noto Sans" :height 0.9))))
 ;   '(mode-line-inactive ((t (:family "Noto Sans" :height 0.9)))))
 
-;; Dashboard
-; (use-package dashboard
-;   :ensure t
-;   :config
-;   (dashboard-setup-startup-hook))
+;; Content is not centered by default. To center, set
+(setq dashboard-center-content t)
+
+;; To disable shortcut "jump" indicators for each section, set
+(setq dashboard-show-shortcuts nil)
 
 ;; Change default font
 (when (member "Source Code Pro" (font-family-list))
@@ -107,5 +107,8 @@
 
 ;; Maximize at startup
 (toggle-frame-maximized)
+
+(setq-default initial-scratch-message
+              (concat ";; Happy hacking, " user-login-name " - Emacs ♥ you!\n\n"))
 
 (provide 'init-look-and-fill)
