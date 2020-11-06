@@ -88,6 +88,12 @@
 ;   '(mode-line ((t (:family "Noto Sans" :height 0.9))))
 ;   '(mode-line-inactive ((t (:family "Noto Sans" :height 0.9)))))
 
+;; Dashboard
+; (use-package dashboard
+;   :ensure t
+;   :config
+;   (dashboard-setup-startup-hook))
+
 ;; Change default font
 (when (member "Source Code Pro" (font-family-list))
   (set-face-attribute 'default nil :font "Source Code Pro" :height 120)
