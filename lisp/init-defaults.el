@@ -54,4 +54,22 @@
   :config
   (which-key-mode))
 
+;; Recentf
+;; This is a built-in mode that keeps track of the files you have opened allowing you go back to them faster.
+(use-package recentf
+  :ensure t
+  :init
+  (setq recentf-max-saved-items 50
+        recentf-max-menu-items 15
+        recentf-show-file-shortcuts-flag nil
+        recentf-auto-cleanup 'never)
+  :config
+  (recentf-mode t))
+
+;; Extended command
+(use-package smex
+  :ensure t
+  :config
+  (smex-initialize))
+
 (provide 'init-defaults)
