@@ -1,4 +1,4 @@
-;;; init-os.el --- Operating system interface related config -*- lexical-binding: t -*-
+;;; init-os.el --- OS related config -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
