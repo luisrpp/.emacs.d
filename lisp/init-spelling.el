@@ -2,5 +2,4 @@
 ;;; Commentary:
 ;;; Code:
 
-
 (provide 'init-spelling)

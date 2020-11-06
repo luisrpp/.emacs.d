@@ -1,4 +1,4 @@
-;;; init-selectrum.el --- Selectrum setup -*- lexical-binding: t -*-
+;;; init-completions.el --- Completions setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -15,4 +15,4 @@
 ;; intelligent over time
 (prescient-persist-mode +1)
 
-(provide 'init-selectrum)
+(provide 'init-completions)

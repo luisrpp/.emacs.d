@@ -11,22 +11,14 @@
   ;; Measure startup time
   (require 'init-benchmarking)
 
-  ;; Adjust garbage collection thresholds during startup, and thereafter
-  (let ((normal-gc-cons-threshold (* 2 1000 1000))
-        (init-gc-cons-threshold most-positive-fixnum))
-    (setq gc-cons-threshold init-gc-cons-threshold)
-    (add-hook 'emacs-startup-hook
-              (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
-
   ;; In noninteractive sessions, prioritize non-byte-compiled source files to
   ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
   ;; to skip the mtime checks on every *.elc file.
   (setq load-prefer-newer noninteractive)
 
   ;; Bootstrap config
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (require 'init-straight) ;; Machinery for installing required packages
-  ; (require 'init-exec-path) ;; Set up $PATH
+  (require 'init-packages)
+  (require 'init-os)
 
   ;; Allow users to provide an optional "init-preload-local.el"
   (require 'init-preload-local nil t)
@@ -36,10 +28,10 @@
   (use-package scratch)
   (use-package command-log-mode)
 
-  (require 'init-ui)
-  (require 'init-themes)
+  (require 'init-defaults)
+  (require 'init-look-and-fill)
   (require 'init-osx-keys)
-  (require 'init-selectrum)
+  (require 'init-completions)
 
   (when *spell-check-support-enabled*
     (require 'init-spelling))
@@ -54,12 +46,7 @@
               (unless (server-running-p)
                 (server-start))))
 
-  ;; Variables configured via the interactive 'customize' interface
-  (when (file-exists-p custom-file)
-    (load custom-file))
-
   ;; Locales (setting them earlier in this file doesn't work in X)
-  (require 'init-locales)
-)
+  (require 'init-locales))
 
 (provide 'init)

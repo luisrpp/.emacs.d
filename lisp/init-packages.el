@@ -1,4 +1,4 @@
-;;; init-straight.el --- Straight setup -*- lexical-binding: t -*-
+;;; init-packages.el --- Packages setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -26,4 +26,4 @@
         straight-use-package-by-default t))
 (require 'use-package)
 
-(provide 'init-straight)
+(provide 'init-packages)
