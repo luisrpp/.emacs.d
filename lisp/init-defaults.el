@@ -19,7 +19,7 @@
 
 (setq auto-window-vscroll nil)
 
-;; Don’t use tabs to indent and fix some indentation settings
+;; Don't use tabs to indent and fix some indentation settings
 (use-package emacs
   :ensure nil
   :config
