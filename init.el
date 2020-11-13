@@ -29,6 +29,7 @@
   (use-package command-log-mode)
 
   (require 'init-defaults)
+  (require 'init-editor)
   (require 'init-look-and-fill)
   (require 'init-ui)
   (require 'init-osx-keys)
