@@ -6,7 +6,7 @@
 (use-package neotree
   :defer t
   :bind
-  ("C-x SPC" . neotree-toggle)
+  ("C-;" . neotree-toggle)
   :config
   ;; needs package all-the-icons
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
@@ -21,6 +21,5 @@
 
   ;; track ‘projectile-switch-project’ (C-c p p),
   (setq projectile-switch-project-action 'neotree-projectile-action))
-
 
 (provide 'init-ui)
